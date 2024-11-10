@@ -22,12 +22,23 @@ Route::get('/addCategory', function (){
 Route::get('/listCategory', function (){
     return view('admin.category.list');
 })->name('listCategory');
-
 Route::get('/updateCategory', function (){
     return view('admin.category.update');
 })->name('updateCategory');
 
+//add officer
+Route::get('/addOfficer', function (){
+    return view('admin.libraryOfficer.add');
+})->name('addOfficer');
+Route::get('/listOfficer', function (){
+    return view('admin.libraryOfficer.list');
+})->name('listOfficer');
+Route::get('/updateOfficer', function (){
+    return view('admin.libraryOfficer.update');
+})->name('updateOfficer');
 
+
+//officer
 //Book
 Route::get('/addBook', function (){
     return view('officer.book.add');
