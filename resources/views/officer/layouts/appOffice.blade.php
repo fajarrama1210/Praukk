@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title> Admin || @yield('title')</title>
+    <title> Officer || @yield('title')</title>
 
     <meta name="description" content="" />
 
@@ -77,14 +77,12 @@
 
     <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
-
     <!-- Vendors JS -->
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
-
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
-
     <!-- Page JS -->
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
 </body>
+
 </html>

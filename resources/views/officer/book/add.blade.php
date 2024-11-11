@@ -1,4 +1,4 @@
-@extends('admin.layouts.appAdmin')
+@extends('officer.layouts.appOffice')
 @section('title')
     Add Book
 @endsection
