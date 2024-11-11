@@ -16,11 +16,11 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Detail</th>
-                        <th>Aksi</th>
+                        <th>NO</th>
+                        <th>NAMA</th>
+                        <th>EAMAIL</th>
+                        <th>DETAIL</th>
+                        <th>AKSI</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">

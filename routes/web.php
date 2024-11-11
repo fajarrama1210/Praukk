@@ -14,6 +14,11 @@ Route::get('/testing', function (){
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //admin
+//dashboard
+Route::get('/admin', function (){
+    return view('admin.dashboard');
+})->name('adminDashboard');
+
 //category
 Route::get('/addCategory', function (){
     return view('admin.category.add');
@@ -36,9 +41,13 @@ Route::get('/listOfficer', function (){
 Route::get('/updateOfficer', function (){
     return view('admin.libraryOfficer.update');
 })->name('updateOfficer');
-
+//end admin
 
 //officer
+//dashboard
+Route::get('/office', function (){
+    return view('officer.dashboard');
+})->name('officerDashboard');
 //Book
 Route::get('/addBook', function (){
     return view('officer.book.add');
@@ -52,5 +61,15 @@ Route::get('/updateBook', function (){
     return view('officer.book.update');
 })->name('updateBook');
 
+//loan
+Route::get('/addLoan', function (){
+    return view('officer.loan.add');
+})->name('addLoan');
 
-//end admin
+Route::get('/listLoan', function (){
+    return view('officer.loan.list');
+})->name('listLoan');
+
+
+
+

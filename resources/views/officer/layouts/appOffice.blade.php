@@ -47,11 +47,11 @@
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
 
-            @include('admin.layouts.sidebar')
+            @include('officer.layouts.sidebar')
             <!-- Layout container -->
             <div class="layout-page">
 
-                @include('admin.layouts.navbar')
+                @include('officer.layouts.navbar')
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">

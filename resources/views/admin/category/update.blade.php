@@ -5,8 +5,6 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-
-    <!-- Basic Layout -->
     <div class="row justify-content-center">
         <div class="col-xl-6 col-md-8">
             <div class="card mb-4">

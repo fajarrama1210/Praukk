@@ -2,10 +2,8 @@
 @section('title')
     List Category
 @endsection
-
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <!-- Basic Bootstrap Table -->
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Kategori Buku</h5>
@@ -16,9 +14,9 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama</th>
-                        <th>Aksi</th>
+                        <th>NO</th>
+                        <th>NAMA</th>
+                        <th>AKSI</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -44,7 +42,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <!--/ Basic Bootstrap Table -->
     </div>
 @endsection
