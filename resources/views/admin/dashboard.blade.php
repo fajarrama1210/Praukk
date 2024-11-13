@@ -3,6 +3,11 @@
     Dashboard
 @endsection
 @section('content')
-Halaman Dashboard menyesuaikan 
+<center>
+
+    <h3>
+        Halaman Dhasbord nunggu semua firut selesai hehehe
+    </h3>
+</center>
 @endsection
 
