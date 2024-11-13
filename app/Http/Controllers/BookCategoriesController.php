@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Books_reviews;
-use App\Http\Requests\StoreBooks_reviewsRequest;
-use App\Http\Requests\UpdateBooks_reviewsRequest;
+use App\Models\BookCategories;
+use Illuminate\Http\Request;
 
-class BooksReviewsController extends Controller
+class BookCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +26,7 @@ class BooksReviewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBooks_reviewsRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +34,7 @@ class BooksReviewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Books_reviews $books_reviews)
+    public function show(BookCategories $bookCategories)
     {
         //
     }
@@ -43,7 +42,7 @@ class BooksReviewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Books_reviews $books_reviews)
+    public function edit(BookCategories $bookCategories)
     {
         //
     }
@@ -51,7 +50,7 @@ class BooksReviewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBooks_reviewsRequest $request, Books_reviews $books_reviews)
+    public function update(Request $request, BookCategories $bookCategories)
     {
         //
     }
@@ -59,7 +58,7 @@ class BooksReviewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Books_reviews $books_reviews)
+    public function destroy(BookCategories $bookCategories)
     {
         //
     }

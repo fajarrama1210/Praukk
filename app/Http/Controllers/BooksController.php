@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
-use App\Http\Requests\StoreBooksRequest;
-use App\Http\Requests\UpdateBooksRequest;
+use App\Models\Books;
+use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
@@ -27,7 +26,7 @@ class BooksController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBooksRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +34,7 @@ class BooksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Book $books)
+    public function show(Books $books)
     {
         //
     }
@@ -43,7 +42,7 @@ class BooksController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Book $books)
+    public function edit(Books $books)
     {
         //
     }
@@ -51,7 +50,7 @@ class BooksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBooksRequest $request, Book $books)
+    public function update(Request $request, Books $books)
     {
         //
     }
@@ -59,7 +58,7 @@ class BooksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $books)
+    public function destroy(Books $books)
     {
         //
     }

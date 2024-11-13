@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Personal_collections;
-use App\Http\Requests\StorePersonal_collectionsRequest;
-use App\Http\Requests\UpdatePersonal_collectionsRequest;
+use App\Models\BookRelations;
+use Illuminate\Http\Request;
 
-class PersonalCollectionsController extends Controller
+class BookRelationsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +26,7 @@ class PersonalCollectionsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePersonal_collectionsRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +34,7 @@ class PersonalCollectionsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Personal_collections $personal_collections)
+    public function show(BookRelations $bookRelations)
     {
         //
     }
@@ -43,7 +42,7 @@ class PersonalCollectionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Personal_collections $personal_collections)
+    public function edit(BookRelations $bookRelations)
     {
         //
     }
@@ -51,7 +50,7 @@ class PersonalCollectionsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePersonal_collectionsRequest $request, Personal_collections $personal_collections)
+    public function update(Request $request, BookRelations $bookRelations)
     {
         //
     }
@@ -59,7 +58,7 @@ class PersonalCollectionsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Personal_collections $personal_collections)
+    public function destroy(BookRelations $bookRelations)
     {
         //
     }

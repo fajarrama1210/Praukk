@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Loan;
-use App\Http\Requests\StoreLoansRequest;
-use App\Http\Requests\UpdateLoansRequest;
+use App\Models\Loans;
+use Illuminate\Http\Request;
 
 class LoansController extends Controller
 {
@@ -27,7 +26,7 @@ class LoansController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLoansRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +34,7 @@ class LoansController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Loan $loans)
+    public function show(Loans $loans)
     {
         //
     }
@@ -43,7 +42,7 @@ class LoansController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Loan $loans)
+    public function edit(Loans $loans)
     {
         //
     }
@@ -51,7 +50,7 @@ class LoansController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLoansRequest $request, Loan $loans)
+    public function update(Request $request, Loans $loans)
     {
         //
     }
@@ -59,7 +58,7 @@ class LoansController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Loan $loans)
+    public function destroy(Loans $loans)
     {
         //
     }
