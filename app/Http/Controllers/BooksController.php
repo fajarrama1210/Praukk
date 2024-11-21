@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookCategories;
 use App\Models\Books;
+use App\Models\BookShelf;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -12,7 +14,8 @@ class BooksController extends Controller
      */
     public function index()
     {
-        //
+        $books = Books::all();
+        return view('officer.book.list', compact('books'));
     }
 
     /**
@@ -20,7 +23,9 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        $categories = BookCategories::all();
+        $shelves = BookShelf::all();
+        return view('officer.book.add', compact('categories', 'shelves'));
     }
 
     /**
@@ -28,7 +33,29 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'writer' => 'required|string|max:255',
+            'publisher' => 'required|string|max:255',
+            'category_id' => 'required',
+            'shelf_id' => 'required',
+            'publish_year' => 'required|integer|min:1900|max:' . date('Y'),
+            'code' => 'required|string|max:255',
+            'stock' => 'required|integer|min:1', // Validasi untuk kolom stock
+        ]);
+
+        Books::create([
+            'title' => $request->title,
+            'writer' => $request->writer,
+            'publisher' => $request->publisher,
+            'publish_year' => $request->publish_year,
+            'category_id' => $request->category_id,
+            'shelf_id' => $request->shelf_id,
+            'code' => $request->code,
+            'stock' => $request->stock, // Tambahkan stock di sini
+        ]);
+
+        return redirect()->route('officer.book.list')->with('success', 'Buku baru berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +63,7 @@ class BooksController extends Controller
      */
     public function show(Books $books)
     {
-        //
+        // Implementasi tambahan jika diperlukan
     }
 
     /**
@@ -44,7 +71,9 @@ class BooksController extends Controller
      */
     public function edit(Books $books)
     {
-        //
+        $categories = BookCategories::all();
+        $shelves = BookShelf::all();
+        return view('officer.book.update', compact('books', 'categories', 'shelves'));
     }
 
     /**
@@ -52,7 +81,18 @@ class BooksController extends Controller
      */
     public function update(Request $request, Books $books)
     {
-        //
+        $books->update([
+            'title' => $request->title,
+            'writer' => $request->writer,
+            'publisher' => $request->publisher,
+            'publish_year' => $request->publish_year,
+            'category_id' => $request->category_id,
+            'shelf_id' => $request->shelf_id,
+            'code' => $request->code,
+            'stock' => $request->stock,
+        ]);
+
+        return redirect()->route('officer.book.list')->with('success', 'Buku berhasil diperbarui');
     }
 
     /**
@@ -60,6 +100,7 @@ class BooksController extends Controller
      */
     public function destroy(Books $books)
     {
-        //
+        $books->delete();
+        return redirect()->route('officer.book.list')->with('success', 'Buku berhasil dihapus');
     }
 }

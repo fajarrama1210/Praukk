@@ -67,8 +67,8 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Kategori</span>
         </li>
-        <li class="menu-item {{ Request::routeIs('listCategory') ? 'active' : '' }}">
-            <a href="{{ route('listCategory') }}" class="menu-link">
+        <li class="menu-item {{ Request::routeIs('admin.category.list') ? 'active' : '' }}">
+            <a href="{{ route('admin.category.list') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Kategori Buku</div>
             </a>

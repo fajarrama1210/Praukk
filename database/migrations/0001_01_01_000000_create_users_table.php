@@ -14,13 +14,17 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('nisn');
             $table->string('email')->unique();
+            $table->unsignedBigInteger('class_id');
+            $table->unsignedBigInteger('major_id');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('full_name');
-            $table->text('address')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('class_id')->references('id')->on('student_classes')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreign('major_id')->references('id')->on('student_majors')->cascadeOnDelete()->cascadeOnUpdate();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -1,41 +1,44 @@
 @extends('officer.layouts.appOffice')
+
 @section('title')
-    list loan
+    List Loan
 @endsection
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-semibold py-3 mb-4"><span class="text-muted fw-light">PEMINJAMAN BUKU</span> </h4>
 
-        <!-- Bootstrap Toasts with Placement -->
+        <!-- Filter Data -->
         <div class="card mb-4">
             <div class="card-body">
-                <div class="row gx-3 gy-2 align-items-center">
-                    <div class="col-md-3">
-                        <label class="form-label" for="selectTypeOpt">PENCARIAN DATA</label>
-                        <select id="selectTypeOpt" class="form-select color-dropdown">
-                            <option value="bg-primary" selected>Semua Status</option>
-                            <option value="bg-secondary">Terlambat!</option>
-                            <option value="bg-success">Dalam Peminjaman</option>
-                            <option value="bg-danger">Sudah Dikembalikan</option>
-                            <option value="bg-warning">Dibatalkan</option>
-                        </select>
+                <form action="{{ route('officer.loan.list') }}" method="GET">
+                    <div class="row gx-3 gy-2 align-items-center">
+                        <div class="col-md-3">
+                            <label class="form-label" for="selectStatus">PENCARIAN DATA</label>
+                            <select id="selectStatus" name="status" class="form-select">
+                                <option value="" {{ $status === '' ? 'selected' : '' }}>Semua Status</option>
+                                <option value="borrowed" {{ $status === 'borrowed' ? 'selected' : '' }}>Dalam Peminjaman</option>
+                                <option value="returned" {{ $status === 'returned' ? 'selected' : '' }}>Sudah Dikembalikan</option>
+                                <option value="canceled" {{ $status === 'canceled' ? 'selected' : '' }}>Dibatalkan</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label" for="searchButton">&nbsp;</label>
+                            <button id="searchButton" class="btn btn-primary d-block">Cari Data</button>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <label class="form-label" for="showToastPlacement">&nbsp;</label>
-                        <button id="showToastPlacement" class="btn btn-primary d-block">Cari Data</button>
-                    </div>
-                </div>
+                </form>
+    
             </div>
         </div>
-        <!--/ Bootstrap Toasts with Placement -->
+        <!-- /Filter Data -->
 
-        <!-- Bootstrap Toasts Styles -->
+        <!-- Daftar Peminjaman -->
         <div class="card mb-4">
             <div class="row g-0">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Peminjaman</h5>
-                    <a href="{{ route('addLoan') }}">
+                    <h5 class="mb-0">Daftar Peminjaman</h5>
+                    <a href="{{ route('officer.loan.add') }}">
                         <button class="btn btn-primary">Buat Peminjaman</button>
                     </a>
                 </div>
@@ -44,42 +47,64 @@
                         <tr>
                             <th>NO</th>
                             <th>NAMA PEMINJAM</th>
-                            <th>TANGGAL PEMINJAM</th>
-                            <th>JUMLAH</th>
+                            <th>BUKU</th>
+                            <th>TANGGAL PINJAM</th>
+                            <th>TANGGAL KEMBALI</th>
                             <th>STATUS</th>
                             <th>AKSI</th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        <tr>
-                            <td>
-                                <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>1</strong>
-                            </td>
-                            <td>TESTING</td>
-                            <td>12-12-2024</td>
-                            <td>1</td>
-                            <td>2024</td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('updateCategory') }}"><i
-                                                class="bx bx-edit-alt me-2"></i>
-                                            Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i>
-                                            Delete</a>
+                        @forelse ($loans as $loan)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $loan->user->name }}</td>
+                                <td>{{ $loan->book->title }}</td>
+                                <td>{{ $loan->loan_date }}</td>
+                                <td>{{ $loan->return_date ? $loan->return_date : '-' }}</td>
+                                <td>
+                                    @if ($loan->status === 'borrowed')
+                                        <span class="badge bg-success">Dalam Peminjaman</span>
+                                    @elseif ($loan->status === 'returned')
+                                        <span class="badge bg-primary">Sudah Dikembalikan</span>
+                                    @elseif ($loan->status === 'canceled')
+                                        <span class="badge bg-danger">Dibatalkan</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            @if ($loan->status === 'borrowed')
+                                            <form action="{{ route('officer.loan.return', $loan->id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <button class="dropdown-item" type="submit"><i
+                                                    class="bx bx-arrow-back me-2"></i>Kembalikan</button>
+                                            </form>
+                                            @endif
+                                            <!-- Delete Form -->
+                                            <form action="{{ route('officer.loan.delete', $loan->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="dropdown-item"><i class="bx bx-trash me-2"></i>Hapus</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="text-center">Belum ada data peminjaman</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
-        <!--/ Bootstrap Toasts Styles -->
+        <!-- /Daftar Peminjaman -->
     </div>
-
 @endsection

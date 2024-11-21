@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BookRelations;
+use App\Models\StudentMajor;
 use Illuminate\Http\Request;
 
-class BookRelationsController extends Controller
+class StudentMajorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class BookRelationsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BookRelations $bookRelations)
+    public function show(StudentMajor $studentMajor)
     {
         //
     }
@@ -42,7 +42,7 @@ class BookRelationsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BookRelations $bookRelations)
+    public function edit(StudentMajor $studentMajor)
     {
         //
     }
@@ -50,7 +50,7 @@ class BookRelationsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BookRelations $bookRelations)
+    public function update(Request $request, StudentMajor $studentMajor)
     {
         //
     }
@@ -58,7 +58,7 @@ class BookRelationsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BookRelations $bookRelations)
+    public function destroy(StudentMajor $studentMajor)
     {
         //
     }

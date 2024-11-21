@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Buku</h5>
-                <a href="{{ route('addBookshelf') }}">
+                <a href="{{ route('officer.bookshelf.add') }}">
                     <button class="btn btn-primary">Tambah Data</button>
                 </a>
             </div>
@@ -20,26 +20,33 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
+                    @foreach($shelves as $shelve)
                     <tr>
                         <td>
-                            <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>1</strong>
+                            <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>{{ $loop->iteration }}</strong>
                         </td>
-                        <td>JURUSAN IT</td>
+                        <td>{{ $shelve->name }}</td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ route('updateBookshelf') }}"><i
+                                    <a class="dropdown-item" href="{{ route('officer.bookshelf.edit', ['bookShelf' => $shelve->id]) }}"><i
                                             class="bx bx-edit-alt me-2"></i>
                                         Edit</a>
-                                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i>
-                                        Delete</a>
+                                    <form action="{{ route('officer.bookshelf.delete', ['bookShelf' => $shelve->id]) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="bx bx-trash me-2"></i> Delete
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
