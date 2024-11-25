@@ -16,14 +16,16 @@ class BooksController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index()
+    {
+        $books = Books::all();
+        return view('officer.book.list', compact('books'));
+    }
+
+    public function dashuser(Request $request)
     {
         // Dummy Data for Book Categories
-        $bookCategories = collect([
-            (object)['id' => 1, 'name' => 'Science'],
-            (object)['id' => 2, 'name' => 'Literature'],
-            (object)['id' => 3, 'name' => 'History'],
-        ]);
+        $bookCategories = BookCategories::all();
 
         // Dummy Data for Books
         $books = Books::all();
@@ -49,7 +51,6 @@ class BooksController extends Controller
             'bookCategories' => $bookCategories,
             'filter' => $request->all(), // Pass the filter data back to the view
         ]);
-        return view('officer.book.list', compact('books'));
     }
 
     /**

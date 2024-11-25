@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 //ini
-Route::get('/', [BooksController::class, 'index'])->name('book.index');
+Route::get('/', [BooksController::class, 'dashuser'])->name('book.index');
 
 Auth::routes();
 Route::get('/testing', function () {
@@ -93,13 +93,6 @@ Route::prefix('officer')->group(function () {
             Route::get('/', function () {
                 return view('officer.loan.list');
             })->name('listLoan');
-        });
-        
-        // Routes untuk kategori
-        Route::prefix('category')->group(function () {
-            Route::get('/list', function () {
-                return view('officer.category.list');
-            })->name('officerCategory');
         });
         
         // Routes untuk rak buku
