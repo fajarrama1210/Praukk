@@ -46,7 +46,25 @@ Route::prefix('admin')->group(function () {
             return view('admin.libraryOfficer.update');
         })->name('updateLibrary');
     });
+
+    Route::prefix('adminOfficer')->group(function () {
+        Route::get('/add', function () {
+            return view('admin.libraryOfficer.add');
+        })->name('admin.libraryOfficer.add');
+
+        Route::get('/', function () {
+            return view('admin.libraryOfficer.list');
+        })->name('admin.libraryOfficer.list');
+
+        Route::get('/update', function () {
+            return view('admin.libraryOfficer.update');
+        })->name('admin.libraryOfficer.update');
+    });
+
 });
+
+
+
 // Prefix untuk officer
 Route::prefix('officer')->group(function () {
     // Dashboard

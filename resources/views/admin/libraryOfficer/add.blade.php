@@ -12,7 +12,7 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Tambah Petugas Perpus</h5>
-                    <a href="{{ route('listOfficer') }}">
+                    <a href="{{ route('admin.libraryOfficer.list') }}">
                         <button class="btn btn-info">Kembali</button>
                     </a>
                 </div>
