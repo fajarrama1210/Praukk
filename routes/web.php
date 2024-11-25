@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\BooksController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//ini
+Route::get('/', [BooksController::class, 'index'])->name('book.index');
 
 Auth::routes();
 Route::get('/testing', function () {
@@ -71,49 +71,50 @@ Route::prefix('admin')->group(function () {
             })->name('updateOfficer');
         });
 
+        
         // Routes untuk buku
         Route::prefix('book')->group(function () {
             Route::get('/add', function () {
                 return view('officer.book.add');
             })->name('addBook');
-
+            
             Route::get('/', function () {
                 return view('officer.book.list');
             })->name('listBook');
-
+            
             Route::get('/update', function () {
                 return view('officer.book.update');
             })->name('updateBook');
         });
-
+        
         // Routes untuk peminjaman
         Route::prefix('loan')->group(function () {
             Route::get('/add', function () {
                 return view('officer.loan.add');
             })->name('addLoan');
-
+            
             Route::get('/', function () {
                 return view('officer.loan.list');
             })->name('listLoan');
         });
-
+        
         // Routes untuk kategori
         Route::prefix('category')->group(function () {
             Route::get('/list', function () {
                 return view('officer.category.list');
             })->name('officerCategory');
         });
-
+        
         // Routes untuk rak buku
         Route::prefix('bookshelf')->group(function () {
             Route::get('/add', function () {
                 return view('officer.bookshelf.add');
             })->name('addBookshelf');
-
+            
             Route::get('/', function () {
                 return view('officer.bookshelf.list');
             })->name('listBookshelf');
-
+            
             Route::get('/update', function () {
                 return view('officer.bookshelf.update');
             })->name('updateBookshelf');

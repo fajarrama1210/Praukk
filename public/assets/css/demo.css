@@ -105,3 +105,27 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+.batas {
+  height: 150px;
+  background: linear-gradient(to top, #e1d3fe83, rgb(255, 255, 255)60%);
+  width:100vw;
+  border-bottom-left-radius: 90px;  /* Lengkungan bawah kiri */
+  border-bottom-right-radius: 90px;
+  margin-bottom:-130px;
+  box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.109);
+}
+
+.jarak {
+  padding-top: 90px;
+}
+
+#telat{
+  border-top-left-radius: 90px;  /* Lengkungan bawah kiri */
+  border-top-right-radius: 90px;
+  box-shadow: 0 -10px 15px rgba(0, 0, 0, 0.1); 
+}
+
+.font-130px{
+  font-size: 130px;
+}
