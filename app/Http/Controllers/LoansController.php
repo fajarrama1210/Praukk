@@ -5,16 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Books;
 use App\Models\Loans;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LoansController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function checkLateLoans()
+    {
+        // Ambil semua peminjaman dengan status 'borrowed' dan tanggal pengembalian telah lewat hari ini
+        $lateLoans = Loans::where('status', 'borrowed')
+            ->where('return_date', '<', now())
+            ->get();
+
+        // Iterasi setiap peminjaman untuk menghitung keterlambatan dan update status
+        foreach ($lateLoans as $loan) {
+            $returnDate = Carbon::parse($loan->return_date);
+
+            if ($returnDate < now()) {
+                $lateDays = now()->diffInDays($returnDate);
+                $loan->update([
+                    'status' => 'lated',
+                    'late_days' => $lateDays,
+                ]);
+            }
+        }
+    }
+
     public function index(Request $request)
     {
-
+        $this->checkLateLoans(); // Panggil fungsi untuk cek peminjaman terlambat
         $status = $request->input('status', '');
 
         // Query untuk mengambil data sesuai filter status
@@ -22,6 +41,7 @@ class LoansController extends Controller
             return $query->where('status', $status);
         })->get();
 
+        // Kirim data loans ke view, termasuk lateDays
         return view('officer.loan.list', [
             'loans' => $loans,
             'status' => $status,

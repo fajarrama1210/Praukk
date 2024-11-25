@@ -19,6 +19,7 @@
                                 <option value="" {{ $status === '' ? 'selected' : '' }}>Semua Status</option>
                                 <option value="borrowed" {{ $status === 'borrowed' ? 'selected' : '' }}>Dalam Peminjaman</option>
                                 <option value="returned" {{ $status === 'returned' ? 'selected' : '' }}>Sudah Dikembalikan</option>
+                                <option value="lated" {{ $status === 'lated' ? 'selected' : '' }}>Terlambat</option>
                                 <option value="canceled" {{ $status === 'canceled' ? 'selected' : '' }}>Dibatalkan</option>
                             </select>
                         </div>
@@ -67,6 +68,8 @@
                                         <span class="badge bg-success">Dalam Peminjaman</span>
                                     @elseif ($loan->status === 'returned')
                                         <span class="badge bg-primary">Sudah Dikembalikan</span>
+                                    @elseif ($loan->status === 'lated')
+                                        <span class="badge bg-danger">Terlambat {{ $loan->late_days }} Hari</span>
                                     @elseif ($loan->status === 'canceled')
                                         <span class="badge bg-danger">Dibatalkan</span>
                                     @endif
