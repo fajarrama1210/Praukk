@@ -37,7 +37,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('libraryOfficer')->group(function () {
         Route::get('/add', function () {
             return view('admin.libraryOfficer.add');
-        })->name('addLibrar');
+        })->name('addOfficer');
 
         Route::get('/', function () {
             return view('admin.libraryOfficer.list');

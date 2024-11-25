@@ -78,8 +78,7 @@ class BookShelfController extends Controller
      */
     public function destroy(BookShelf $bookShelf)
     {
-        $shelf = BookShelf::findOrFail($bookShelf);
-        $shelf->delete();
+        $bookShelf->delete(); // Tidak perlu mencari ulang model, karena $bookShelf sudah di-bind otomatis.
         return redirect()->route('officer.bookshelf.list')->with('success', 'Rak Buku berhasil dihapus');
     }
 }

@@ -35,13 +35,13 @@
                                     <a class="dropdown-item" href="{{ route('officer.bookshelf.edit', ['bookShelf' => $shelve->id]) }}"><i
                                             class="bx bx-edit-alt me-2"></i>
                                         Edit</a>
-                                    <form action="{{ route('officer.bookshelf.delete', ['bookShelf' => $shelve->id]) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="dropdown-item">
-                                            <i class="bx bx-trash me-2"></i> Delete
-                                        </button>
-                                    </form>
+                                        <form action="{{ route('officer.bookshelf.delete', ['bookShelf' => $shelve->id]) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="bx bx-trash me-2"></i> Delete
+                                            </button>
+                                        </form>
                                 </div>
                             </div>
                         </td>

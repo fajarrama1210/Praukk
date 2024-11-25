@@ -14,8 +14,6 @@ class LoansController extends Controller
      */
     public function index(Request $request)
     {
-        // $loans = Loans::with('user', 'book')->get();  // This is correct
-        // return view('officer.loan.list', compact('loans'));
 
         $status = $request->input('status', '');
 
