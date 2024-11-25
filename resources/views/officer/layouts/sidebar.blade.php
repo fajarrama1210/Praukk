@@ -67,24 +67,24 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Peminjaman Buku</span>
         </li>
-        <li class="menu-item {{ Request::routeIs('listLoan') ? 'active' : '' }}">
-            <a href="{{ route('listLoan') }}" class="menu-link">
+        <li class="menu-item {{ Request::routeIs('officer.loan.list') ? 'active' : '' }}">
+            <a href="{{ route('officer.loan.list') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Peminjaman</div>
             </a>
         </li>
-        <li class="menu-item {{ Request::routeIs('officerDashboard') ? 'active' : '' }}">
+        {{-- <li class="menu-item {{ Request::routeIs('officerDashboard') ? 'active' : '' }}">
             <a href="{{ route('officerDashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Pengembalian</div>
             </a>
-        </li>
+        </li> --}}
 
         <!-- Components -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Buku</span></li>
         <!-- Cards -->
-        <li class="menu-item {{ Request::routeIs('listBook') ? 'active' : '' }}">
-            <a href="{{ route('listBook') }}" class="menu-link">
+        <li class="menu-item {{ Request::routeIs('officer.book.list') ? 'active' : '' }}">
+            <a href="{{ route('officer.book.list') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Buku</div>
             </a>
@@ -95,8 +95,8 @@
                 <div data-i18n="Basic">Kategori Buku</div>
             </a>
         </li>
-        <li class="menu-item {{ Request::routeIs('listBookshelf') ? 'active' : '' }}">
-            <a href="{{ route('listBookshelf') }}" class="menu-link">
+        <li class="menu-item {{ Request::routeIs('officer.bookshelf.list') ? 'active' : '' }}">
+            <a href="{{ route('officer.bookshelf.list') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Rak Buku</div>
             </a>

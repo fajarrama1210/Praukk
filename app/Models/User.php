@@ -13,8 +13,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    protected $guarded = ['id'];
     protected $table = 'users';
+    protected $guarded = ['id'];
     /**
      * Get all of the Loans for the User
      *
@@ -22,7 +22,7 @@ class User extends Authenticatable
      */
     public function Loans(): HasMany
     {
-        return $this->hasMany(Loan::class);
+        return $this->hasMany(Loans::class);
     }
     /**
      * Get all of the Personal_collection for the User
@@ -31,7 +31,7 @@ class User extends Authenticatable
      */
     public function Personal_collection(): HasMany
     {
-        return $this->hasMany(Personal_collection::class);
+        return $this->hasMany(personsalCollections::class);
     }
 
     /**
@@ -41,7 +41,7 @@ class User extends Authenticatable
      */
     public function BookReview(): HasMany
     {
-        return $this->hasMany(Book_review::class);
+        return $this->hasMany(BookReviews::class);
     }
     /**
      * The attributes that should be hidden for serialization.

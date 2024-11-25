@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BookCategories extends Model
+class StudentMajor extends Model
 {
-    /** @use HasFactory<\Database\Factories\BookCategoriesFactory> */
+    /** @use HasFactory<\Database\Factories\StudentMajorFactory> */
     use HasFactory;
-    protected $guarded = ['id'];
 }

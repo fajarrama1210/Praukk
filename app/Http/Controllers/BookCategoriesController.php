@@ -8,58 +8,88 @@ use Illuminate\Http\Request;
 class BookCategoriesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar kategori buku.
      */
     public function index()
     {
-        //
+        // Mengambil semua data kategori buku dari database
+        $categories = BookCategories::all();
+
+        // Menyajikan data kategori ke dalam view 'admin.category.list'
+        return view('admin.category.list', compact('categories'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form untuk membuat kategori buku baru.
      */
     public function create()
     {
-        //
+        // Mengarahkan ke view 'admin.category.add' untuk menambahkan kategori baru
+        return view('admin.category.add');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan data kategori buku yang baru dibuat ke dalam database.
      */
     public function store(Request $request)
     {
-        //
+        // Melakukan validasi data yang diinput oleh pengguna
+        $request->validate([
+            'name' => 'required|string|max:255', // nama kategori wajib diisi, berupa string, maksimal 255 karakter
+        ]);
+
+        // Menyimpan data kategori baru ke dalam tabel 'book_categories'
+        BookCategories::create([
+            'name' => $request->name,
+        ]);
+
+        // Mengarahkan kembali ke halaman daftar kategori dengan pesan sukses
+        return redirect()->route('admin.category.list')->with('success', 'Kategori berhasil ditambahkan');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail dari kategori buku tertentu (saat ini belum diimplementasikan).
      */
-    public function show(BookCategories $bookCategories)
+    public function show(BookCategories $bookCategory)
     {
-        //
+        // Metode ini kosong dan dapat diimplementasikan untuk menampilkan detail kategori tertentu jika diperlukan.
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan form untuk mengedit kategori buku yang dipilih.
      */
-    public function edit(BookCategories $bookCategories)
+    public function edit(BookCategories $bookCategory)
     {
-        //
+        // Mengarahkan ke view 'admin.category.update' dengan data kategori yang akan diedit
+        return view('admin.category.update', compact('bookCategory'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui data kategori buku yang dipilih di dalam database.
      */
-    public function update(Request $request, BookCategories $bookCategories)
+    public function update(Request $request, BookCategories $bookCategory)
     {
-        //
+        // Melakukan validasi data yang diinput oleh pengguna
+        $request->validate([
+            'name' => 'required|string|max:255', // nama kategori wajib diisi, berupa string, maksimal 255 karakter
+        ]);
+
+        // Memperbarui data kategori dengan input baru
+        $bookCategory->update([
+            'name' => $request->name,
+        ]);
+
+        // Mengarahkan kembali ke halaman daftar kategori dengan pesan sukses
+        return redirect()->route('admin.category.list')->with('success', 'Kategori berhasil diperbarui');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus kategori buku yang dipilih dari database.
      */
-    public function destroy(BookCategories $bookCategories)
+    public function destroy(BookCategories $bookCategory)
     {
-        //
+        $category = BookCategories::findOrFail($bookCategory);
+        $category->delete();
+        return redirect()->route('admin.category.list')->with('success', 'Kategori berhasil dihapus');
     }
 }

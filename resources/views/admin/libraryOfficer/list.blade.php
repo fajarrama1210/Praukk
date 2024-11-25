@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Daftar Penajaga Perpus</h5>
-                <a href="{{ route('addOfficer') }}">
+                <a href="">
                     <button class="btn btn-primary">Tambah Data</button>
                 </a>
             </div>
@@ -38,7 +38,7 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ route('updateOfficer') }}"><i
+                                    <a class="dropdown-item" href=""><i
                                             class="bx bx-edit-alt me-2"></i>
                                         Edit</a>
                                     <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i>
