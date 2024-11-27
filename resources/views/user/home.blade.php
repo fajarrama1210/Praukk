@@ -133,22 +133,22 @@
                                     <div class="col-md-6 mb-1">
                                         <div class="card card-button card-default mb-4">
                                             <div class="card-body">
-                                                <h5 class="mb-0 fs-md"><b>{{ $b->title }}</b></h5>
+                                                <h5 class="mb-0 fs-md"><b>{{ $b->name }}</b></h5>
                                                 <div class="fs-sm">
-                                                    <p class="mb-1 text-primary"><b>{{ $b->category->name }}</b></p>
+                                                    <p class="mb-1 text-primary"><b>{{ $b->category }}</b></p>
                                                     <p class="mb-0 text-gray-md">
-                                                        {{ $b->publish_year }}
+                                                        {{ $b->published_year }}
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="card-footer" style="border-top: none">
                                                 <div class="row">
                                                     <div class="col-md-6 d-flex align-items-center">
-                                                        <p class="mb-0 text-gray-md fs-sm"><b>Stock: {{ $b->stock }}</b></p>
+                                                        <p class="mb-0 text-gray-md fs-sm"><b>Stock: {{ $b->total_stock }}</b></p>
                                                     </div>
                                                     <div class="col-md-6 text-md-end">
                                                         <div class="mb-2 text-gray-md fs-md">
-                                                            @if ($b->stock > 0)
+                                                            @if ($b->total_stock > 0)
                                                                 <span class="badge bg-success">Tersedia!</span>
                                                             @else
                                                                 <span class="badge bg-warning">Tidak Tersedia</span>

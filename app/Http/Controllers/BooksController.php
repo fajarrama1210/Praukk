@@ -32,13 +32,13 @@ class BooksController extends Controller
 
         // Apply filtering based on request parameters
         if ($request->has('filter_name') && $request->filter_name) {
-            $books = $books->filter(function($book) use ($request) {
+            $books = $books->filter(function ($book) use ($request) {
                 return str_contains(strtolower($book->name), strtolower($request->filter_name));
             });
         }
 
         if ($request->has('filter_category_id') && $request->filter_category_id) {
-            $books = $books->filter(function($book) use ($request) {
+            $books = $books->filter(function ($book) use ($request) {
                 return $book->category_id == $request->filter_category_id;
             });
         }
