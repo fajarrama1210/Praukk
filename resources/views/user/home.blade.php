@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="container my-4">
+        <div class="container my-4" id="katalog">
             <div class="d-flex justify-content-center">
                 <button class="btn m-3 mb-0" id="prevButton"> Katalog</button>
                 <button class="btn m-3 mb-0" id="nextButton">Koleksi </button>
@@ -78,7 +78,7 @@
                                     <h1>Katalog Buku</h1>
                                 </div>
                             </div>
-                       <div class="container mb-4">
+                        <div class="container mb-4">
                             <div class="card-body">
                                 <div class="row gx-3 gy-2 align-items-center">
                                     <div class="col-md-3">
@@ -130,36 +130,36 @@
                         <div class="container">
                             <div class="row">
                                 @foreach ($books as $b)
-                                <div class="col-md-6 mb-1">
-                                    <div class="card card-button card-default mb-4">
-                                        <div class="card-body">
-                                            <h5 class="mb-0 fs-md"><b>{{ $b->title }}</b></h5>
-                                            <div class="fs-sm">
-                                                <p class="mb-1 text-primary"><b>{{ $b->category->name }}</b></p>
-                                                <p class="mb-0 text-gray-md">
-                                                    {{ $b->publish_year }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer" style="border-top: none">
-                                            <div class="row">
-                                                <div class="col-md-6 d-flex align-items-center">
-                                                    <p class="mb-0 text-gray-md fs-sm"><b>Stock: {{ $b->stock }}</b></p>
+                                    <div class="col-md-6 mb-1">
+                                        <div class="card card-button card-default mb-4">
+                                            <div class="card-body">
+                                                <h5 class="mb-0 fs-md"><b>{{ $b->name }}</b></h5>
+                                                <div class="fs-sm">
+                                                    <p class="mb-1 text-primary"><b>{{ $b->category }}</b></p>
+                                                    <p class="mb-0 text-gray-md">
+                                                        {{ $b->published_year }}
+                                                    </p>
                                                 </div>
-                                                <div class="col-md-6 text-md-end">
-                                                    <div class="mb-2 text-gray-md fs-md">
-                                                        @if ($b->stock > 0)
-                                                            <span class="badge bg-success">Tersedia!</span>
-                                                        @else
-                                                            <span class="badge bg-warning">Tidak Tersedia</span>
-                                                        @endif
+                                            </div>
+                                            <div class="card-footer" style="border-top: none">
+                                                <div class="row">
+                                                    <div class="col-md-6 d-flex align-items-center">
+                                                        <p class="mb-0 text-gray-md fs-sm"><b>Stock: {{ $b->total_stock }}</b></p>
+                                                    </div>
+                                                    <div class="col-md-6 text-md-end">
+                                                        <div class="mb-2 text-gray-md fs-md">
+                                                            @if ($b->total_stock > 0)
+                                                                <span class="badge bg-success">Tersedia!</span>
+                                                            @else
+                                                                <span class="badge bg-warning">Tidak Tersedia</span>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
             
                                 @if (!count($books))
                                     <div class="text-center text-gray-md">
