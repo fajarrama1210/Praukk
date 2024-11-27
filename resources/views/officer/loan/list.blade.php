@@ -17,8 +17,10 @@
                             <label class="form-label" for="selectStatus">PENCARIAN DATA</label>
                             <select id="selectStatus" name="status" class="form-select">
                                 <option value="" {{ $status === '' ? 'selected' : '' }}>Semua Status</option>
-                                <option value="borrowed" {{ $status === 'borrowed' ? 'selected' : '' }}>Dalam Peminjaman</option>
-                                <option value="returned" {{ $status === 'returned' ? 'selected' : '' }}>Sudah Dikembalikan</option>
+                                <option value="borrowed" {{ $status === 'borrowed' ? 'selected' : '' }}>Dalam Peminjaman
+                                </option>
+                                <option value="returned" {{ $status === 'returned' ? 'selected' : '' }}>Sudah Dikembalikan
+                                </option>
                                 <option value="lated" {{ $status === 'lated' ? 'selected' : '' }}>Terlambat</option>
                                 <option value="canceled" {{ $status === 'canceled' ? 'selected' : '' }}>Dibatalkan</option>
                             </select>
@@ -29,7 +31,7 @@
                         </div>
                     </div>
                 </form>
-    
+
             </div>
         </div>
         <!-- /Filter Data -->
@@ -68,11 +70,12 @@
                                         <span class="badge bg-success">Dalam Peminjaman</span>
                                     @elseif ($loan->status === 'returned')
                                         <span class="badge bg-primary">Sudah Dikembalikan</span>
-                                    @elseif ($loan->status === 'lated')
+                                    @elseif ($loan->status === 'lated' && $loan->late_days > 0)
                                         <span class="badge bg-danger">Terlambat {{ $loan->late_days }} Hari</span>
                                     @elseif ($loan->status === 'canceled')
                                         <span class="badge bg-danger">Dibatalkan</span>
                                     @endif
+
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -82,18 +85,21 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             @if ($loan->status === 'borrowed')
-                                            <form action="{{ route('officer.loan.return', $loan->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <button class="dropdown-item" type="submit"><i
-                                                    class="bx bx-arrow-back me-2"></i>Kembalikan</button>
-                                            </form>
+                                                <form action="{{ route('officer.loan.return', $loan->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="dropdown-item" type="submit"><i
+                                                            class="bx bx-arrow-back me-2"></i>Kembalikan</button>
+                                                </form>
                                             @endif
                                             <!-- Delete Form -->
-                                            <form action="{{ route('officer.loan.delete', $loan->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('officer.loan.delete', $loan->id) }}" method="POST"
+                                                class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="dropdown-item"><i class="bx bx-trash me-2"></i>Hapus</button>
+                                                <button type="submit" class="dropdown-item"><i
+                                                        class="bx bx-trash me-2"></i>Hapus</button>
                                             </form>
                                         </div>
                                     </div>

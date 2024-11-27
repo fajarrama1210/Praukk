@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('loan_date');
             $table->date('return_date');
             $table->string('status');
+            $table->integer('late_days')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('book_id')->references('id')->on('books')->cascadeOnDelete()->cascadeOnUpdate();
         });

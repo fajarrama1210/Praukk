@@ -16,7 +16,14 @@ class BooksController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+
+    public function index()
+    {
+        $books = Books::all();
+        return view('officer.book.list', compact('books'));
+    }
+
+    public function landingpage(Request $request)
     {
         // Dummy Data for Book Categories
         $bookCategories = collect([
@@ -30,13 +37,13 @@ class BooksController extends Controller
 
         // Apply filtering based on request parameters
         if ($request->has('filter_name') && $request->filter_name) {
-            $books = $books->filter(function($book) use ($request) {
+            $books = $books->filter(function ($book) use ($request) {
                 return str_contains(strtolower($book->name), strtolower($request->filter_name));
             });
         }
 
         if ($request->has('filter_category_id') && $request->filter_category_id) {
-            $books = $books->filter(function($book) use ($request) {
+            $books = $books->filter(function ($book) use ($request) {
                 return $book->category_id == $request->filter_category_id;
             });
         }
@@ -49,7 +56,6 @@ class BooksController extends Controller
             'bookCategories' => $bookCategories,
             'filter' => $request->all(), // Pass the filter data back to the view
         ]);
-        return view('officer.book.list', compact('books'));
     }
 
     /**

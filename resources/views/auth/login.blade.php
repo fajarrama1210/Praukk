@@ -68,7 +68,7 @@
                         <h4 class="mb-2 text-center">Selamat Datang ! 👋</h4>
                         <p class="mb-4 text-center">Silahkan Login Menggunakan Akun Anda</p>
 
-                        <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+                        <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="email" name="email"
@@ -111,5 +111,4 @@
             </div>
         </div>
     </div>
-
 @endsection

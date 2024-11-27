@@ -12,20 +12,30 @@ class LoansController extends Controller
 {
     public function checkLateLoans()
     {
-        // Ambil semua peminjaman dengan status 'borrowed' dan tanggal pengembalian telah lewat hari ini
-        $lateLoans = Loans::where('status', 'borrowed')
-            ->where('return_date', '<', now())
-            ->get();
+        $loans = Loans::all();
 
-        // Iterasi setiap peminjaman untuk menghitung keterlambatan dan update status
-        foreach ($lateLoans as $loan) {
+        foreach ($loans as $loan) {
             $returnDate = Carbon::parse($loan->return_date);
 
-            if ($returnDate < now()) {
-                $lateDays = now()->diffInDays($returnDate);
+            // Periksa jika tanggal kembali sudah lewat hari ini
+            if ($returnDate->lt(Carbon::today())) {
+                $lateDays = now()->diffInDays($returnDate, false);
+
                 $loan->update([
                     'status' => 'lated',
-                    'late_days' => $lateDays,
+                    'late_days' => abs($lateDays),
+                ]);
+            }
+            // Periksa jika tanggal kembali adalah hari ini
+            elseif ($returnDate->eq(Carbon::today())) {
+                $loan->update([
+                    'status' => 'borrowed',
+                    'late_days' => 0, // Tidak dihitung keterlambatan
+                ]);
+            } else {
+                $loan->update([
+                    'status' => 'borrowed',
+                    'late_days' => 0,
                 ]);
             }
         }
@@ -39,7 +49,7 @@ class LoansController extends Controller
         // Query untuk mengambil data sesuai filter status
         $loans = Loans::when($status, function ($query, $status) {
             return $query->where('status', $status);
-        })->get();
+        })->paginate(10);
 
         // Kirim data loans ke view, termasuk lateDays
         return view('officer.loan.list', [
