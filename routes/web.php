@@ -1,19 +1,19 @@
 <?php
 
-use App\Http\Controllers\BooksController;
-use App\Http\Controllers\BookCategoriesController;
-use App\Http\Controllers\BookShelfController;
-use App\Http\Controllers\LoansController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\LoansController;
+use App\Http\Controllers\MajorController;
+use App\Http\Controllers\BookShelfController;
+use App\Http\Controllers\StudentClassController;
+use App\Http\Controllers\StudentMajorController;
+use App\Http\Controllers\BookCategoriesController;
 
 //ini
 Route::get('/', [BooksController::class, 'dashuser'])->name('book.index');
 
 Auth::routes();
-Route::get('/testing', function () {
-    return view('index');
-});
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Prefix untuk semua route admin
@@ -61,6 +61,25 @@ Route::prefix('admin')->group(function () {
         })->name('admin.libraryOfficer.update');
     });
 
+    Route::prefix('student-class')->group(function () {
+        Route::get('/', [StudentClassController::class, 'index'])->name('admin.studentClass.list');
+        Route::get('/add', [StudentClassController::class, 'create'])->name('admin.studentClass.add');
+        Route::post('/store', [StudentClassController::class, 'store'])->name('admin.studentClass.store'); // Correct the route name here
+        Route::get('/update/{studentClass}', [StudentClassController::class, 'edit'])->name('admin.studentClass.update');
+        Route::put('/update/{studentClass}', [StudentClassController::class, 'update'])->name('admin.studentClass.update.submit');
+        Route::delete('/delete/{studentClass}', [StudentClassController::class, 'destroy'])->name('admin.studentClass.delete');
+    });
+
+    Route::prefix('student-major')->group(function () {
+        Route::get('/', [StudentMajorController::class, 'index'])->name('admin.studentMajor.list');
+        Route::get('/add', [StudentMajorController::class, 'create'])->name('admin.studentMajor.add');
+        Route::post('/store', [StudentMajorController::class, 'store'])->name('admin.major.store');
+        Route::get('/update/{studentMajor}', [StudentMajorController::class, 'edit'])->name('admin.studentMajor.update');
+        Route::put('/update/{studentMajor}', [StudentMajorController::class, 'update'])->name('admin.major.put');
+        Route::delete('/delete/{studentMajor}', [StudentMajorController::class, 'destroy'])->name('admin.major.delete');
+    });
+
+
 });
 
 
@@ -87,46 +106,46 @@ Route::prefix('officer')->group(function () {
     //     })->name('updateOfficer');
     // });
 
-        // Routes untuk buku
-        Route::prefix('book')->group(function () {
-            Route::get('/add', function () {
-                return view('officer.book.add');
-            })->name('addBook');
-            
-            Route::get('/', function () {
-                return view('officer.book.list');
-            })->name('listBook');
-            
-            Route::get('/update', function () {
-                return view('officer.book.update');
-            })->name('updateBook');
-        });
-        
-        // Routes untuk peminjaman
-        Route::prefix('loan')->group(function () {
-            Route::get('/add', function () {
-                return view('officer.loan.add');
-            })->name('addLoan');
-            
-            Route::get('/', function () {
-                return view('officer.loan.list');
-            })->name('listLoan');
-        });
-        
-        // Routes untuk rak buku
-        Route::prefix('bookshelf')->group(function () {
-            Route::get('/add', function () {
-                return view('officer.bookshelf.add');
-            })->name('addBookshelf');
-            
-            Route::get('/', function () {
-                return view('officer.bookshelf.list');
-            })->name('listBookshelf');
-            
-            Route::get('/update', function () {
-                return view('officer.bookshelf.update');
-            })->name('updateBookshelf');
-        });
+    // Routes untuk buku
+    Route::prefix('book')->group(function () {
+        Route::get('/add', function () {
+            return view('officer.book.add');
+        })->name('addBook');
+
+        Route::get('/', function () {
+            return view('officer.book.list');
+        })->name('listBook');
+
+        Route::get('/update', function () {
+            return view('officer.book.update');
+        })->name('updateBook');
+    });
+
+    // Routes untuk peminjaman
+    Route::prefix('loan')->group(function () {
+        Route::get('/add', function () {
+            return view('officer.loan.add');
+        })->name('addLoan');
+
+        Route::get('/', function () {
+            return view('officer.loan.list');
+        })->name('listLoan');
+    });
+
+    // Routes untuk rak buku
+    Route::prefix('bookshelf')->group(function () {
+        Route::get('/add', function () {
+            return view('officer.bookshelf.add');
+        })->name('addBookshelf');
+
+        Route::get('/', function () {
+            return view('officer.bookshelf.list');
+        })->name('listBookshelf');
+
+        Route::get('/update', function () {
+            return view('officer.bookshelf.update');
+        })->name('updateBookshelf');
+    });
     Route::prefix('book')->group(function () {
         Route::get('/', [BooksController::class, 'index'])->name('officer.book.list');
         Route::get('/add', [BooksController::class, 'create'])->name('officer.book.add');
