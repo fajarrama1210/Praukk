@@ -1,13 +1,6 @@
 <?php
 
-<<<<<<< HEAD
-use App\Http\Controllers\BooksController;
-use App\Http\Controllers\BookCategoriesController;
-use App\Http\Controllers\BookShelfController;
-use App\Http\Controllers\HomepageController;
-use App\Http\Controllers\LoansController;
-=======
->>>>>>> 2dca6df424cfb87b2fa70f17af0565946f095afb
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
@@ -17,6 +10,8 @@ use App\Http\Controllers\BookShelfController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentMajorController;
 use App\Http\Controllers\BookCategoriesController;
+use App\Http\Controllers\HomepageController;
+
 
 //ini
 Route::get('/', [HomepageController::class, 'dashuser'])->name('home.index');

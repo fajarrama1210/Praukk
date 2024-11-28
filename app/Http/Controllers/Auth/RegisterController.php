@@ -1,86 +1,58 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\StudentClass;
 use App\Models\StudentMajor;
-use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterController extends Controller
-{
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
+class RegisterController extends Controller {
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/login'; // Ubah ke '/login'
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest');
     }
 
-    public function showRegistrationForm()
-    {
-        $classes = StudentClass::all(); // Ambil semua data dari tabel Class
-        $majors = StudentMajor::all();
 
-        // Kirim data ke view register
+    public function showRegistrationForm() {
+        $classes = StudentClass::all();
+        $majors = StudentMajor::all();
         return view('auth.register', compact('classes', 'majors'));
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
+
+    protected function validator(array $data) {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'nisn' => ['required', 'string', 'max:15', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8',],
+            'password' => ['required', 'string', 'min:8'],
+            'class_id' => ['required', 'exists:student_classes,id'],
+            'major_id' => ['required', 'exists:student_majors,id'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
-    {
+    protected function create(array $data) {
+        $photoPath = null;
+
+        if (isset($data['photo'])) {
+            $photoPath = $data['photo']->store('photos', 'public');
+        }
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
             'nisn' => $data['nisn'],
-            'password' => Hash::make($data['password']),
+            'email' => $data['email'],
             'class_id' => $data['class_id'],
             'major_id' => $data['major_id'],
+            'password' => Hash::make($data['password']),
+            'photo' => $photoPath,
+            'role' => 'user', 
         ]);
     }
 }

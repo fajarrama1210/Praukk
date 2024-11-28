@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Books extends Model
 {
@@ -15,11 +16,22 @@ class Books extends Model
 
     public function category()
     {
-        return $this->belongsTo(BookCategories::class, 'category_id');
+        return $this->belongsTo(BookCategory::class);
     }
 
     public function shelves()
     {
         return $this->belongsTo(BookShelf::class, 'shelf_id');
     }
+
+    /**
+     * Get all of the Book for the Books
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Book(): HasMany
+    {
+        return $this->hasMany(Books::class);
+    }
+
 }
