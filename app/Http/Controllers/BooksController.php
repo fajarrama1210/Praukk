@@ -22,36 +22,35 @@ class BooksController extends Controller
         return view('officer.book.list', compact('books'));
     }
 
-    public function dashuser(Request $request)
-    {
-        // Dummy Data for Book Categories
-        $bookCategories = BookCategories::all();
+    // public function dashuser(Request $request){
+    //     // Dummy Data for Book Categories
+    //     $bookCategories = BookCategories::all();
 
-        // Dummy Data for Books
-        $books = Books::all();
+    //     // Dummy Data for Books
+    //     $books = Books::all();
 
-        // Apply filtering based on request parameters
-        if ($request->has('filter_name') && $request->filter_name) {
-            $books = $books->filter(function($book) use ($request) {
-                return str_contains(strtolower($book->name), strtolower($request->filter_name));
-            });
-        }
+    //     // Apply filtering based on request parameters
+    //     if ($request->has('filter_name') && $request->filter_name) {
+    //         $books = $books->filter(function($book) use ($request) {
+    //             return str_contains(strtolower($book->name), strtolower($request->filter_name));
+    //         });
+    //     }
 
-        if ($request->has('filter_category_id') && $request->filter_category_id) {
-            $books = $books->filter(function($book) use ($request) {
-                return $book->category_id == $request->filter_category_id;
-            });
-        }
+    //     if ($request->has('filter_category_id') && $request->filter_category_id) {
+    //         $books = $books->filter(function($book) use ($request) {
+    //             return $book->category_id == $request->filter_category_id;
+    //         });
+    //     }
 
-        // Paginate the books (for demo purposes, using a simple limit here)
-        // $books = $books->paginate(10);
+    //     // Paginate the books (for demo purposes, using a simple limit here)
+    //     // $books = $books->paginate(10);
 
-        return view('user.home', [
-            'books' => $books,
-            'bookCategories' => $bookCategories,
-            'filter' => $request->all(), // Pass the filter data back to the view
-        ]);
-    }
+    //     return view('user.home', [
+    //         'books' => $books,
+    //         'bookCategories' => $bookCategories,
+    //         'filter' => $request->all(), // Pass the filter data back to the view
+    //     ]);
+    // }
 
     /**
      * Show the form for creating a new resource.

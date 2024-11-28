@@ -3,12 +3,13 @@
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\BookCategoriesController;
 use App\Http\Controllers\BookShelfController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\LoansController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 //ini
-Route::get('/', [BooksController::class, 'dashuser'])->name('book.index');
+Route::get('/', [HomepageController::class, 'dashuser'])->name('home.index');
 
 Auth::routes();
 Route::get('/testing', function () {
