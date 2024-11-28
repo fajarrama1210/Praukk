@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 
 class StudentMajorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        // Mengambil semua data jurusan
+        $majors = StudentMajor::all();
+        return view('admin.studentMajor.list', compact('majors'));
     }
 
     /**
@@ -20,7 +19,7 @@ class StudentMajorController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.studentMajor.add');
     }
 
     /**
@@ -28,15 +27,17 @@ class StudentMajorController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(StudentMajor $studentMajor)
-    {
-        //
+        // Menyimpan data jurusan baru
+        StudentMajor::create([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('admin.studentMajor.list')->with('success', 'Jurusan berhasil ditambahkan.');
     }
 
     /**
@@ -44,7 +45,7 @@ class StudentMajorController extends Controller
      */
     public function edit(StudentMajor $studentMajor)
     {
-        //
+        return view('admin.studentMajor.update', compact('studentMajor'));
     }
 
     /**
@@ -52,7 +53,17 @@ class StudentMajorController extends Controller
      */
     public function update(Request $request, StudentMajor $studentMajor)
     {
-        //
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        // Update data jurusan
+        $studentMajor->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('admin.studentMajor.list')->with('success', 'Jurusan berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +71,9 @@ class StudentMajorController extends Controller
      */
     public function destroy(StudentMajor $studentMajor)
     {
-        //
+        // Menghapus data jurusan
+        $studentMajor->delete();
+
+        return redirect()->route('admin.studentMajor.list')->with('success', 'Jurusan berhasil dihapus.');
     }
 }

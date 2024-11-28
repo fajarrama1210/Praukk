@@ -68,19 +68,51 @@
             <span class="menu-header-text">Kategori</span>
         </li>
         <li class="menu-item {{ Request::routeIs('admin.category.list') ? 'active' : '' }}">
-            <a href="{{ route('admin.category.list') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <a href="{{ route('admin.category.list') }}" class="menu-link"
+                style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M7.425 9.475L11.15 3.4q.15-.25.375-.363T12 2.925t.475.113t.375.362l3.725 6.075q.15.25.15.525t-.125.5t-.35.363t-.525.137h-7.45q-.3 0-.525-.137T7.4 10.5t-.125-.5t.15-.525M17.5 22q-1.875 0-3.187-1.312T13 17.5t1.313-3.187T17.5 13t3.188 1.313T22 17.5t-1.312 3.188T17.5 22M3 20.5v-6q0-.425.288-.712T4 13.5h6q.425 0 .713.288T11 14.5v6q0 .425-.288.713T10 21.5H4q-.425 0-.712-.288T3 20.5m14.5-.5q1.05 0 1.775-.725T20 17.5t-.725-1.775T17.5 15t-1.775.725T15 17.5t.725 1.775T17.5 20M5 19.5h4v-4H5zM10.05 9h3.9L12 5.85zm7.45 8.5" />
+                </svg>
                 <div data-i18n="Analytics">Kategori Buku</div>
+            </a>
+        </li>
+        <li class="menu-item {{ Request::routeIs('admin.studentMajor.list') ? 'active' : '' }}">
+            <a href="{{ route('admin.studentMajor.list') }}" class="menu-link"
+                style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M6.05 17.775q-.5-.275-.775-.737T5 16v-4.8L2.6 9.875q-.275-.15-.4-.375T2.075 9t.125-.5t.4-.375l8.45-4.6q.225-.125.463-.188T12 3.275t.488.063t.462.187l9.525 5.2q.25.125.388.363T23 9.6V16q0 .425-.288.713T22 17t-.712-.288T21 16v-5.9l-2 1.1V16q0 .575-.275 1.038t-.775.737l-5 2.7q-.225.125-.462.188t-.488.062t-.488-.062t-.462-.188zM12 12.7L18.85 9L12 5.3L5.15 9zm0 6.025l5-2.7V12.25l-4.025 2.225q-.225.125-.475.188t-.5.062t-.5-.062t-.475-.188L7 12.25v3.775zm0-3" />
+                </svg>
+                <div data-i18n="Analytics">Jurusan</div>
+            </a>
+        </li>
+        <li class="menu-item {{ Request::routeIs('admin.studentClass.list') ? 'active' : '' }}">
+            <a href="{{ route('admin.studentClass.list') }}" class="menu-link"
+                style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m8 9l5 5v7H8v-4m0 4H3v-7l5-5m1 1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17h-8m0-14v.01M17 7v.01M17 11v.01M17 15v.01" />
+                </svg>
+                <div data-i18n="Analytics">Kelas </div>
             </a>
         </li>
 
         <!-- Components -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">User</span></li>
         <!-- Cards -->
-        <li class="menu-item {{ Request::routeIs('listLibrary') ? 'active' : '' }}">
-            <a href="{{ route('listLibrary') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Petugas</div>
+        <li class="menu-item {{ Request::routeIs('admin.libraryOfficer.list') ? 'active' : '' }}">
+            <a href="{{ route('admin.libraryOfficer.list') }}" class="menu-link"
+                style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <g fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="6" r="4" />
+                        <path stroke-linecap="round"
+                            d="M19.998 18q.002-.246.002-.5c0-2.485-3.582-4.5-8-4.5s-8 2.015-8 4.5S4 22 12 22c2.231 0 3.84-.157 5-.437" />
+                    </g>
+                </svg>
+                <div data-i18n="Basic">Akun Petugas</div>
             </a>
         </li>
     </ul>

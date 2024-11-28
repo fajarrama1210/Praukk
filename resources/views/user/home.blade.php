@@ -124,6 +124,7 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                 
                             <hr class="mb-5 container">
                 
@@ -163,6 +164,38 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+=======
+                        </div>
+            
+                        <hr class="mb-5 container">
+            
+                        <div class="container">
+                            <div class="row">
+                                @foreach ($books as $b)
+                                    <div class="col-md-6 mb-1">
+                                        <div class="card card-button card-default mb-4">
+                                            <div class="card-body">
+                                                <h5 class="mb-0 fs-md"><b>{{ $b->name }}</b></h5>
+                                                <div class="fs-sm">
+                                                    <p class="mb-1 text-primary"><b>{{ $b->category }}</b></p>
+                                                    <p class="mb-0 text-gray-md">
+                                                        {{ $b->published_year }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer" style="border-top: none">
+                                                <div class="row">
+                                                    <div class="col-md-6 d-flex align-items-center">
+                                                        <p class="mb-0 text-gray-md fs-sm"><b>Stock: {{ $b->total_stock }}</b></p>
+                                                    </div>
+                                                    <div class="col-md-6 text-md-end">
+                                                        <div class="mb-2 text-gray-md fs-md">
+                                                            @if ($b->total_stock > 0)
+                                                                <span class="badge bg-success">Tersedia!</span>
+                                                            @else
+                                                                <span class="badge bg-warning">Tidak Tersedia</span>
+                                                            @endif
+>>>>>>> 2dca6df424cfb87b2fa70f17af0565946f095afb
                                                         </div>
                                                     </div>
                                                 </div>

@@ -29,6 +29,7 @@ class BooksController extends Controller
     //     // Dummy Data for Books
     //     $books = Books::all();
 
+<<<<<<< HEAD
     //     // Apply filtering based on request parameters
     //     if ($request->has('filter_name') && $request->filter_name) {
     //         $books = $books->filter(function($book) use ($request) {
@@ -41,6 +42,20 @@ class BooksController extends Controller
     //             return $book->category_id == $request->filter_category_id;
     //         });
     //     }
+=======
+        // Apply filtering based on request parameters
+        if ($request->has('filter_name') && $request->filter_name) {
+            $books = $books->filter(function ($book) use ($request) {
+                return str_contains(strtolower($book->name), strtolower($request->filter_name));
+            });
+        }
+
+        if ($request->has('filter_category_id') && $request->filter_category_id) {
+            $books = $books->filter(function ($book) use ($request) {
+                return $book->category_id == $request->filter_category_id;
+            });
+        }
+>>>>>>> 2dca6df424cfb87b2fa70f17af0565946f095afb
 
     //     // Paginate the books (for demo purposes, using a simple limit here)
     //     // $books = $books->paginate(10);

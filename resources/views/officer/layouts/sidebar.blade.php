@@ -68,8 +68,11 @@
             <span class="menu-header-text">Peminjaman Buku</span>
         </li>
         <li class="menu-item {{ Request::routeIs('officer.loan.list') ? 'active' : '' }}">
-            <a href="{{ route('officer.loan.list') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <a href="{{ route('officer.loan.list') }}" class="menu-link" style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M0 1h4.764l.545 2h18.078l-3.666 11H7.78l-.5 2H22v2H4.72l1.246-4.989L3.236 3H0zm7.764 11h10.515l2.334-7H5.855zM4 21a2 2 0 1 1 4 0a2 2 0 0 1-4 0m14 0a2 2 0 1 1 4 0a2 2 0 0 1-4 0" />
+                </svg>
                 <div data-i18n="Analytics">Peminjaman</div>
             </a>
         </li>
@@ -84,22 +87,33 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Buku</span></li>
         <!-- Cards -->
         <li class="menu-item {{ Request::routeIs('officer.book.list') ? 'active' : '' }}">
-            <a href="{{ route('officer.book.list') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+            <a href="{{ route('officer.book.list') }}"
+                class="menu-link" style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M7.5 22q-1.45 0-2.475-1.025T4 18.5v-13q0-1.45 1.025-2.475T7.5 2H20v15q-.625 0-1.062.438T18.5 18.5t.438 1.063T20 20v2zM6 15.325q.35-.175.725-.25T7.5 15H8V4h-.5q-.625 0-1.062.438T6 5.5zM10 15h8V4h-8zm-4 .325V4zM7.5 20h9.325q-.15-.35-.237-.712T16.5 18.5q0-.4.075-.775t.25-.725H7.5q-.65 0-1.075.438T6 18.5q0 .65.425 1.075T7.5 20" />
+                </svg>
                 <div data-i18n="Basic">Buku</div>
             </a>
         </li>
         <li class="menu-item {{ Request::routeIs('officerCategory') ? 'active' : '' }}">
-            <a href="{{ route('officerCategory') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+            <a href="{{ route('officerCategory') }}" class="menu-link" style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M7.425 9.475L11.15 3.4q.15-.25.375-.363T12 2.925t.475.113t.375.362l3.725 6.075q.15.25.15.525t-.125.5t-.35.363t-.525.137h-7.45q-.3 0-.525-.137T7.4 10.5t-.125-.5t.15-.525M17.5 22q-1.875 0-3.187-1.312T13 17.5t1.313-3.187T17.5 13t3.188 1.313T22 17.5t-1.312 3.188T17.5 22M3 20.5v-6q0-.425.288-.712T4 13.5h6q.425 0 .713.288T11 14.5v6q0 .425-.288.713T10 21.5H4q-.425 0-.712-.288T3 20.5m14.5-.5q1.05 0 1.775-.725T20 17.5t-.725-1.775T17.5 15t-1.775.725T15 17.5t.725 1.775T17.5 20M5 19.5h4v-4H5zM10.05 9h3.9L12 5.85zm7.45 8.5" />
+                </svg>
                 <div data-i18n="Basic">Kategori Buku</div>
             </a>
         </li>
         <li class="menu-item {{ Request::routeIs('officer.bookshelf.list') ? 'active' : '' }}">
-            <a href="{{ route('officer.bookshelf.list') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+            <a href="{{ route('officer.bookshelf.list') }}" class="menu-link"
+                style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M6 22q-1.25 0-2.125-.875T3 19V5q0-1.25.875-2.125T6 2h11v16H6q-.425 0-.712.288T5 19t.288.713T6 20h13V4h2v18zm3-6h6V4H9zm-2 0V4H6q-.425 0-.712.288T5 5v11.175q.25-.075.488-.125T6 16zM5 4v12.175z" />
+                </svg>
                 <div data-i18n="Basic">Rak Buku</div>
             </a>
         </li>
     </ul>
-    </aside>
+</aside>
