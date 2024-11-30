@@ -31,7 +31,6 @@ class StudentMajorController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
-
         // Menyimpan data jurusan baru
         StudentMajor::create([
             'name' => $request->name,
