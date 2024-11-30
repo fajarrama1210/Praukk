@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BookCategories;
+use App\Models\BookCategory;
 use App\Models\Books;
 use Illuminate\Http\Request;
 
@@ -11,7 +11,7 @@ class HomepageController extends Controller
     public function dashuser(Request $request)
     {
         // Get all book categories for filtering options
-        $bookCategories = BookCategories::all();
+        $bookCategories = BookCategory::all();
 
         // Start building the query for the Books model
         $books = Books::query();

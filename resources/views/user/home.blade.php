@@ -108,7 +108,7 @@
                                                     @endif
                                                 </div>
                                             </form>
-                                            
+
                                             <script>
                                                 function checkForLogin() {
                                                     var searchQuery = document.getElementById('filter_name').value.trim().toLowerCase();
@@ -119,15 +119,14 @@
                                                     return true;  // Melanjutkan pengiriman form
                                                 }
                                             </script>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
-                
+
                             <hr class="mb-5 container">
-                
+
                             <div class="container">
                                 <div class="row">
                                     @foreach ($books as $b)
@@ -164,45 +163,13 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-=======
-                        </div>
-            
-                        <hr class="mb-5 container">
-            
-                        <div class="container">
-                            <div class="row">
-                                @foreach ($books as $b)
-                                    <div class="col-md-6 mb-1">
-                                        <div class="card card-button card-default mb-4">
-                                            <div class="card-body">
-                                                <h5 class="mb-0 fs-md"><b>{{ $b->name }}</b></h5>
-                                                <div class="fs-sm">
-                                                    <p class="mb-1 text-primary"><b>{{ $b->category }}</b></p>
-                                                    <p class="mb-0 text-gray-md">
-                                                        {{ $b->published_year }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer" style="border-top: none">
-                                                <div class="row">
-                                                    <div class="col-md-6 d-flex align-items-center">
-                                                        <p class="mb-0 text-gray-md fs-sm"><b>Stock: {{ $b->total_stock }}</b></p>
-                                                    </div>
-                                                    <div class="col-md-6 text-md-end">
-                                                        <div class="mb-2 text-gray-md fs-md">
-                                                            @if ($b->total_stock > 0)
-                                                                <span class="badge bg-success">Tersedia!</span>
-                                                            @else
-                                                                <span class="badge bg-warning">Tidak Tersedia</span>
-                                                            @endif
->>>>>>> 2dca6df424cfb87b2fa70f17af0565946f095afb
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
-                
+
                                     @if (!count($books))
                                         <div class="text-center text-gray-md">
                                             <img src="{{ url('admin-ui') }}/assets/images/empty-book.png" class="img-fluid mt-2 mt-md-0"
@@ -213,29 +180,29 @@
                                     @endif
                                 </div>
                             </div>
-                    
-                        </div>     
-                
+
+                        </div>
+
                         <!-- Section Kanan: Koleksi -->
                         <div class="flex-shrink-0" style=" padding: 20px; margin-left: 10%;">
                             <div class="row">
-                                
+
                                 {{-- @forelse ($collections as $collection) --}}
                                 <div class="col-md-12 mb-4">
                                     <div class=" h-100">
                                         <div class="card-body d-flex align-items-center flex-column" style="width: 90vw; height:100vh">
                                             <h3 class="mb-5 text-center">Koleksi Anda</h3>
-                                            
+
                                             <div class="container my-4">
                                                 <div class="container mb-4">
                                                     <div class="card-body">
                                                         <form action="{{ url('book') }}" method="GET" class="d-flex align-items-center">
                                                             <input type="hidden" name="filter_on" value="true">
-                                                            
+
                                                             <!-- Search by Name -->
                                                             <input type="text" class="form-control me-2" id="filter_name" name="filter_name"
                                                                 value="{{ $filter['filter_name'] ?? '' }}" placeholder="Kata kunci Nama">
-                                                            
+
                                                             <!-- Category Dropdown -->
                                                             <select class="form-select me-2" id="filter_category_id" name="filter_category_id">
                                                                 <option value="">Semua Kategori</option>
@@ -245,18 +212,18 @@
                                                                     </option>
                                                                 @endforeach
                                                             </select>
-                                                
+
                                                             <!-- Submit Button -->
                                                             <button type="submit" class="btn btn-primary">
                                                                 <b class="bg-transparent">Pencarian</b>
                                                             </button>
-                                                
+
                                                             <!-- Reset Button -->
                                                             @if (!empty($filter['filter_on']))
                                                                 <a href="{{ url('book') }}" class="btn btn-outline-secondary ms-1">Reset Filter</a>
                                                             @endif
                                                         </form>
-                                                        
+
                                                         <script>
                                                             function checkForLogin() {
                                                                 var searchQuery = document.getElementById('filter_name').value.trim().toLowerCase();
@@ -298,7 +265,7 @@
                                                     </tr>
                                                 </table>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -309,30 +276,30 @@
                         </div>
                     </div>
                 </div>
-            
+
                 <!-- Tombol Navigasi -->
             </div>
-            
+
             <script>
                 let currentSlide = 0;
-            
+
                 const sliderWrapper = document.getElementById('sliderWrapper');
                 const prevButton = document.getElementById('prevButton');
                 const nextButton = document.getElementById('nextButton');
-            
+
                 // Navigasi ke slide sebelumnya
                 prevButton.addEventListener('click', () => {
                     currentSlide = Math.max(currentSlide - 1, 0); // Jangan geser lebih dari batas awal
                     sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
                 });
-            
+
                 // Navigasi ke slide berikutnya
                 nextButton.addEventListener('click', () => {
                     currentSlide = Math.min(currentSlide + 1, 1); // Jangan geser lebih dari batas akhir
                     sliderWrapper.style.transform = `translateX(-${currentSlide * 50}%)`;
                 });
             </script>
-        
+
         <section class="col-md-12 bg-white rounded-5" id="telat">
             <div class="container">
                 <div class="row">

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('nisn')->nullable();
             $table->string('email')->unique();
-            $table->unsignedBigInteger('class_id');
-            $table->unsignedBigInteger('major_id');
+            $table->unsignedBigInteger('class_id')->nullable();
+            $table->unsignedBigInteger('major_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'officer', 'user']);

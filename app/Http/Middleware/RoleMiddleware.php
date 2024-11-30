@@ -18,11 +18,11 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        if (Auth::check() && Auth::user()->role == $role) {
-            return $next($request);  // Role sesuai, lanjutkan permintaan
+        if (!Auth::check() || Auth::user()->role !== $role) {
+            return redirect()->route('access-denied');
         }
 
-        // Jika role tidak sesuai, alihkan ke halaman lain (misalnya halaman akses ditolak)
-        return redirect('/access-denied');
+        return $next($request);
     }
+    
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
@@ -11,22 +10,23 @@ use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentMajorController;
 use App\Http\Controllers\BookCategoriesController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\Auth\LoginController;
 
-
-//ini
+// Halaman depan untuk semua pengguna (User)
 Route::get('/', [HomepageController::class, 'dashuser'])->name('home.index');
-
-Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Prefix untuk semua route admin
-Route::prefix('admin')->group(function () {
-    // Dashboard
+// Rute untuk login dan registrasi
+Auth::routes();
+
+Route::view('/access-denied', 'access-denied')->name('access-denied');
+
+Route::prefix('admin')->middleware(['role:admin'])->group(function () {
     Route::get('/', function () {
         return view('admin.dashboard');
     })->name('adminDashboard');
 
-    // Routes untuk kategori
+    // Rute untuk kategori
     Route::prefix('category')->group(function () {
         Route::get('/', [BookCategoriesController::class, 'index'])->name('admin.category.list');
         Route::get('/add', [BookCategoriesController::class, 'create'])->name('admin.category.add');
@@ -36,21 +36,26 @@ Route::prefix('admin')->group(function () {
         Route::delete('/{bookCategory}/delete', [BookCategoriesController::class, 'destroy'])->name('admin.category.delete');
     });
 
-    Route::prefix('libraryOfficer')->group(function () {
-        Route::get('/add', function () {
-            return view('admin.libraryOfficer.add');
-        })->name('addOfficer');
-
-        Route::get('/', function () {
-            return view('admin.libraryOfficer.list');
-        })->name('listLibrary');
-
-        Route::get('/update', function () {
-            return view('admin.libraryOfficer.update');
-        })->name('updateLibrary');
+    // Rute untuk kelas mahasiswa
+    Route::prefix('student-class')->group(function () {
+        Route::get('/', [StudentClassController::class, 'index'])->name('admin.studentClass.list');
+        Route::get('/add', [StudentClassController::class, 'create'])->name('admin.studentClass.add');
+        Route::post('/store', [StudentClassController::class, 'store'])->name('admin.studentClass.store');
+        Route::get('/update/{studentClass}', [StudentClassController::class, 'edit'])->name('admin.studentClass.update');
+        Route::put('/update/{studentClass}', [StudentClassController::class, 'update'])->name('admin.studentClass.update.submit');
+        Route::delete('/delete/{studentClass}', [StudentClassController::class, 'destroy'])->name('admin.studentClass.delete');
     });
 
-    Route::prefix('adminOfficer')->group(function () {
+    // Rute untuk major mahasiswa
+    Route::prefix('student-major')->group(function () {
+        Route::get('/', [StudentMajorController::class, 'index'])->name('admin.studentMajor.list');
+        Route::get('/add', [StudentMajorController::class, 'create'])->name('admin.studentMajor.add');
+        Route::post('/store', [StudentMajorController::class, 'store'])->name('admin.major.store');
+        Route::get('/update/{studentMajor}', [StudentMajorController::class, 'edit'])->name('admin.studentMajor.update');
+        Route::put('/update/{studentMajor}', [StudentMajorController::class, 'update'])->name('admin.major.put');
+        Route::delete('/delete/{studentMajor}', [StudentMajorController::class, 'destroy'])->name('admin.major.delete');
+    });
+    Route::prefix('libraryOfficer')->group(function () {
         Route::get('/add', function () {
             return view('admin.libraryOfficer.add');
         })->name('admin.libraryOfficer.add');
@@ -61,94 +66,29 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/update', function () {
             return view('admin.libraryOfficer.update');
-        })->name('admin.libraryOfficer.update');
+        })->name('admin.libraryOfficer.updat');
     });
-
-    Route::prefix('student-class')->group(function () {
-        Route::get('/', [StudentClassController::class, 'index'])->name('admin.studentClass.list');
-        Route::get('/add', [StudentClassController::class, 'create'])->name('admin.studentClass.add');
-        Route::post('/store', [StudentClassController::class, 'store'])->name('admin.studentClass.store'); // Correct the route name here
-        Route::get('/update/{studentClass}', [StudentClassController::class, 'edit'])->name('admin.studentClass.update');
-        Route::put('/update/{studentClass}', [StudentClassController::class, 'update'])->name('admin.studentClass.update.submit');
-        Route::delete('/delete/{studentClass}', [StudentClassController::class, 'destroy'])->name('admin.studentClass.delete');
-    });
-
-    Route::prefix('student-major')->group(function () {
-        Route::get('/', [StudentMajorController::class, 'index'])->name('admin.studentMajor.list');
-        Route::get('/add', [StudentMajorController::class, 'create'])->name('admin.studentMajor.add');
-        Route::post('/store', [StudentMajorController::class, 'store'])->name('admin.major.store');
-        Route::get('/update/{studentMajor}', [StudentMajorController::class, 'edit'])->name('admin.studentMajor.update');
-        Route::put('/update/{studentMajor}', [StudentMajorController::class, 'update'])->name('admin.major.put');
-        Route::delete('/delete/{studentMajor}', [StudentMajorController::class, 'destroy'])->name('admin.major.delete');
-    });
-
 
 });
 
-
-
-// Prefix untuk officer
-Route::prefix('officer')->group(function () {
-    // Dashboard
+// Rute untuk Officer dengan middleware role:officer
+Route::prefix('officer')->middleware(['role:officer'])->group(function () {
+    // Dashboard Officer
     Route::get('/', function () {
         return view('officer.dashboard');
     })->name('officerDashboard');
 
-    // Officer management routes
-    // Route::prefix('library')->group(function () {
-    //     Route::get('/add', function () {
-    //         return view('admin.libraryOfficer.add');
-    //     })->name('addOfficer');
-
-    //     Route::get('/', function () {
-    //         return view('admin.libraryOfficer.list');
-    //     })->name('listOfficer');
-
-    //     Route::get('/update', function () {
-    //         return view('admin.libraryOfficer.update');
-    //     })->name('updateOfficer');
-    // });
-
-    // Routes untuk buku
-    Route::prefix('book')->group(function () {
-        Route::get('/add', function () {
-            return view('officer.book.add');
-        })->name('addBook');
-
-        Route::get('/', function () {
-            return view('officer.book.list');
-        })->name('listBook');
-
-        Route::get('/update', function () {
-            return view('officer.book.update');
-        })->name('updateBook');
-    });
-
-    // Routes untuk peminjaman
-    Route::prefix('loan')->group(function () {
-        Route::get('/add', function () {
-            return view('officer.loan.add');
-        })->name('addLoan');
-
-        Route::get('/', function () {
-            return view('officer.loan.list');
-        })->name('listLoan');
-    });
-
-    // Routes untuk rak buku
+    // Rute untuk rak buku
     Route::prefix('bookshelf')->group(function () {
-        Route::get('/add', function () {
-            return view('officer.bookshelf.add');
-        })->name('addBookshelf');
-
-        Route::get('/', function () {
-            return view('officer.bookshelf.list');
-        })->name('listBookshelf');
-
-        Route::get('/update', function () {
-            return view('officer.bookshelf.update');
-        })->name('updateBookshelf');
+        Route::get('/', [BookShelfController::class, 'index'])->name('officer.bookshelf.list');
+        Route::get('/add', [BookShelfController::class, 'create'])->name('officer.bookshelf.add');
+        Route::post('/store', [BookShelfController::class, 'store'])->name('officer.bookshelf.store');
+        Route::get('/{bookShelf}/edit', [BookShelfController::class, 'edit'])->name('officer.bookshelf.edit');
+        Route::put('/{bookShelf}/update', [BookShelfController::class, 'update'])->name('officer.bookshelf.update');
+        Route::delete('/{bookShelf}/delete', [BookShelfController::class, 'destroy'])->name('officer.bookshelf.delete');
     });
+
+    // Rute untuk buku
     Route::prefix('book')->group(function () {
         Route::get('/', [BooksController::class, 'index'])->name('officer.book.list');
         Route::get('/add', [BooksController::class, 'create'])->name('officer.book.add');
@@ -158,7 +98,7 @@ Route::prefix('officer')->group(function () {
         Route::delete('/{books}/delete', [BooksController::class, 'destroy'])->name('officer.book.delete');
     });
 
-    // Routes untuk peminjaman
+    // Rute untuk peminjaman
     Route::prefix('loan')->group(function () {
         Route::get('/', [LoansController::class, 'index'])->name('officer.loan.list');
         Route::get('/add', [LoansController::class, 'create'])->name('officer.loan.add');
@@ -166,20 +106,9 @@ Route::prefix('officer')->group(function () {
         Route::put('{id}/return', [LoansController::class, 'returnBook'])->name('officer.loan.return');
         Route::delete('/{id}/delete', [LoansController::class, 'destroy'])->name('officer.loan.delete');
     });
+});
 
-    // Routes untuk kategori
-    Route::prefix('category')->group(function () {
-        Route::get('/', function () {
-            return view('officer.category.list');
-        })->name('officerCategory');
-    });
-
-    Route::prefix('bookshelf')->group(function () {
-        Route::get('/', [BookShelfController::class, 'index'])->name('officer.bookshelf.list');
-        Route::get('/add', [BookShelfController::class, 'create'])->name('officer.bookshelf.add');
-        Route::post('/store', [BookShelfController::class, 'store'])->name('officer.bookshelf.store');
-        Route::get('/{bookShelf}/edit', [BookShelfController::class, 'edit'])->name('officer.bookshelf.edit');
-        Route::put('/{bookShelf}/update', [BookShelfController::class, 'update'])->name('officer.bookshelf.update');
-        Route::delete('/{bookShelf}/delete', [BookShelfController::class, 'destroy'])->name('officer.bookshelf.delete');
-    });
+// Rute untuk User (role:user)
+Route::prefix('user')->middleware(['role:user'])->group(function () {
+    // Rute lainnya untuk pengguna biasa bisa ditambahkan di sini
 });

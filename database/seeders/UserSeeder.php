@@ -1,49 +1,44 @@
 <?php
 
-    namespace Database\Seeders;
+namespace Database\Seeders;
 
-    use App\Models\User;
-    use Illuminate\Database\Seeder;
-    use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
-    class UserSeeder extends Seeder
+class UserSeeder extends Seeder
+{
+    public function run(): void
     {
-        /**
-         * Run the database seeds.
-         *
-         * @return void
-         */
-        public function run()
-        {
-            // Menambahkan role admin
-            User::create([
-                'name' => 'Admin User',
-                'email' => 'admin@gmail.com',
-                'password' => Hash::make('asdasd'),
-                'role' => 'admin', // Menetapkan role sebagai admin
-                'class_id' => null,  // Tidak perlu class_id
-                'major_id' => null,  // Tidak perlu major_id
-            ]);
+        // Membuat role jika belum ada
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $officerRole = Role::firstOrCreate(['name' => 'officer']);
+        $userRole = Role::firstOrCreate(['name' => 'user']);
 
-            // Menambahkan role officer
-            User::create([
-                'name' => 'Officer User',
-                'email' => 'officer@gmail.com',
-                'password' => Hash::make('asdasd'),
-                'role' => 'officer', // Menetapkan role sebagai officer
-                'class_id' => null,  // Tidak perlu class_id
-                'major_id' => null,  // Tidak perlu major_id
-            ]);
+        // Membuat user admin
+        $adminUser = User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('asdasd'),
+        ]);
+        $adminUser->assignRole($adminRole);
 
-            // Menambahkan role user
-            User::create([
-                'name' => 'Regular User',
-                'nisn' => '112233445', // Nisn diperlukan hanya untuk user
-                'email' => 'user@gmail.com',
-                'password' => Hash::make('asdasd'),
-                'role' => 'user', // Menetapkan role sebagai user
-                'class_id' => 1, // Pastikan ini ada di database atau sesuaikan
-                'major_id' => 1, // Pastikan ini ada di database atau sesuaikan
-            ]);
-        }
+        // Membuat user officer
+        $officerUser = User::create([
+            'name' => 'Officer User',
+            'email' => 'officer@gmail.com',
+            'password' => Hash::make('asdasd'),
+        ]);
+        $officerUser->assignRole($officerRole);
+
+        // Membuat user regular
+        $regularUser = User::create([
+            'name' => 'Regular User',
+            'nisn' => '112233445',
+            'email' => 'user@gmail.com',
+            'password' => Hash::make('asdasd'),
+        ]);
+        $regularUser->assignRole($userRole);
     }
+}

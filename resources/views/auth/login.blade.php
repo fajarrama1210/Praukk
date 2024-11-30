@@ -8,7 +8,6 @@
     <div class="container-xxl">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner">
-                <!-- Register -->
                 <div class="card">
                     <div class="card-body">
                         <!-- Logo -->
@@ -69,6 +68,7 @@
                         <p class="mb-4 text-center">Silahkan Login Menggunakan Akun Anda</p>
 
                         <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
+                            @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="email" name="email"
@@ -77,9 +77,9 @@
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Password</label>
-                                    <a href="auth-forgot-password-basic.html">
+                                    {{-- <a href="auth-forgot-password-basic.html">
                                         <small>Forgot Password?</small>
-                                    </a>
+                                    </a> --}}
                                 </div>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password"
@@ -107,7 +107,6 @@
                         </p>
                     </div>
                 </div>
-                <!-- /Register -->
             </div>
         </div>
     </div>

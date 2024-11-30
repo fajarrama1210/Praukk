@@ -25,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->share('categories', BookCategory::all());
         // Mendaftarkan middleware role untuk aplikasi
-        Route::middleware('role', RoleMiddleware::class);  // Mendaftarkan middleware yang telah dibuat
+        Route::middleware([RoleMiddleware::class])->group(function () {
+            Route::get('/admin', 'AdminController@index')->name('adminDashboard');
+            Route::get('/officer', 'OfficerController@index')->name('officerDashboard');
+            Route::get('/home', 'HomeController@index')->name('home.index');
+        });
     }
 }
