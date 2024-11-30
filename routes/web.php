@@ -12,12 +12,11 @@ use App\Http\Controllers\BookCategoriesController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\Auth\LoginController;
 
+Auth::routes();
 // Halaman depan untuk semua pengguna (User)
 Route::get('/', [HomepageController::class, 'dashuser'])->name('home.index');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Rute untuk login dan registrasi
-Auth::routes();
 
 Route::view('/access-denied', 'access-denied')->name('access-denied');
 
@@ -36,7 +35,6 @@ Route::prefix('admin')->middleware(['role:admin'])->group(function () {
         Route::delete('/{bookCategory}/delete', [BookCategoriesController::class, 'destroy'])->name('admin.category.delete');
     });
 
-    // Rute untuk kelas mahasiswa
     Route::prefix('student-class')->group(function () {
         Route::get('/', [StudentClassController::class, 'index'])->name('admin.studentClass.list');
         Route::get('/add', [StudentClassController::class, 'create'])->name('admin.studentClass.add');
@@ -46,7 +44,6 @@ Route::prefix('admin')->middleware(['role:admin'])->group(function () {
         Route::delete('/delete/{studentClass}', [StudentClassController::class, 'destroy'])->name('admin.studentClass.delete');
     });
 
-    // Rute untuk major mahasiswa
     Route::prefix('student-major')->group(function () {
         Route::get('/', [StudentMajorController::class, 'index'])->name('admin.studentMajor.list');
         Route::get('/add', [StudentMajorController::class, 'create'])->name('admin.studentMajor.add');
@@ -55,6 +52,7 @@ Route::prefix('admin')->middleware(['role:admin'])->group(function () {
         Route::put('/update/{studentMajor}', [StudentMajorController::class, 'update'])->name('admin.major.put');
         Route::delete('/delete/{studentMajor}', [StudentMajorController::class, 'destroy'])->name('admin.major.delete');
     });
+
     Route::prefix('libraryOfficer')->group(function () {
         Route::get('/add', function () {
             return view('admin.libraryOfficer.add');

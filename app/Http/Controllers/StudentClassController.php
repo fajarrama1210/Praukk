@@ -9,14 +9,12 @@ class StudentClassController extends Controller
 {
     public function index()
     {
-        // Menampilkan daftar kelas
         $studentClasses = StudentClass::all();
         return view('admin.studentClass.list', compact('studentClasses'));
     }
 
     public function create()
     {
-        // Menampilkan form untuk menambah kelas
         return view('admin.studentClass.add');
     }
 
@@ -35,7 +33,6 @@ class StudentClassController extends Controller
 
     public function edit(StudentClass $studentClass)
     {
-        // Menampilkan form untuk mengedit kelas
         return view('admin.studentClass.update', compact('studentClass'));
     }
 
@@ -53,7 +50,6 @@ class StudentClassController extends Controller
     }
         public function destroy(StudentClass $studentClass)
     {
-        // Menghapus kelas
         $studentClass->delete();
 
         return redirect()->route('admin.studentClass.list')->with('success', 'Kelas berhasil dihapus');
