@@ -20,6 +20,12 @@ class BookCategoriesController extends Controller
         return view('admin.category.list', compact('categories'));
     }
 
+    public function indexOfficer()
+    {
+        $categories = BookCategory::all();
+        return view('officer.category.list', compact('categories'));
+    }
+
     /**
      * Menampilkan form untuk membuat kategori buku baru.
      */

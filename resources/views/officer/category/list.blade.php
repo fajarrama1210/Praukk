@@ -6,7 +6,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Kategori Buku</h5>
+                <h5 class="mb-0">Kategori Buku </h5>
             </div>
             <table class="table">
                 <thead>

@@ -19,10 +19,10 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, $role)
     {
         if (!Auth::check() || Auth::user()->role !== $role) {
-            return redirect()->route('access-denied');
+            return back()->with('error', 'Anda tidak memiliki akses ke halaman ini.');
         }
 
         return $next($request);
     }
-    
+
 }
