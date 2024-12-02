@@ -112,3 +112,7 @@ Route::prefix('officer')->middleware(['role:officer'])->group(function () {
 Route::prefix('user')->middleware(['role:user'])->group(function () {
     // Rute lainnya untuk pengguna biasa bisa ditambahkan di sini
 });
+
+Route::get('/review', function () {
+    return view('user.review');
+});

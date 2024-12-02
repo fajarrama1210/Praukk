@@ -120,19 +120,36 @@
                         </li>
                         <li class="nav-item ms-3 bg-primary rounded-3" style="width: 80px;">
                             <a class="nav-link text-center"
-                                href="/login" style="color: aliceblue">Login</a>
+                                href="{{ route('login') }}" style="color: aliceblue">Login</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
-    </section>
+    <section>
+        <div class="container">
+            <div class="flex-shrink-0">
+                <div class="row">
 
-            @yield('content')
-    <footer>
-        <div class="d-flex justify-content-center">made by RPL</div>
-    </footer>
+                    {{-- @forelse ($collections as $collection) --}}
+                    <div class="col-md-12 mb-4">
+                        <div class="">
+                            <div class="card-body d-flex align-items-center flex-column" style="width: 90vw; height:100vh">
+                                <h3 class=" text-center">Koleksi Anda</h3>
+
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                    {{-- @empty --}}
+                    {{-- <p class="text-center">Anda belum memiliki koleksi.</p> --}}
+                    {{-- @endforelse --}}
+                </div>
+            </div>
+        </div>
+    </section>
 
 </body>
 
