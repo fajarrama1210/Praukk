@@ -118,6 +118,10 @@
                             <a class="nav-link"
                                 href="#telat">Keterlambatan</a>
                         </li>
+                        <li class="nav-item ms-3 bg-primary rounded-3" style="width: 80px;">
+                            <a class="nav-link"
+                                href="/login">Login</a>
+                        </li>
                     </ul>
                 </div>
             </div>

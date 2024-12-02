@@ -238,31 +238,47 @@
                                                 </div>
                                                 <hr>
                                                 <table style="width: 78vw; margin: 0 auto; border-collapse: separate; border-spacing: 0 10px;">
-                                                    <!-- Baris Data -->
-                                                    <tr style="height: 80px; background-color: #ffffff; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); border-radius: 0.375rem;">
-                                                        <td style="border: 1px solid #e9e9e9; border-radius: 0.375rem 0 0 0.375rem; text-align: center; width: 10%;"><b>1</b></td>
-                                                        <td style="border: 1px solid #e9e9e9; border-right: none; text-align: left; width: 50%;">
-                                                            <div class="m-3">
-                                                                <h5 class="mb-0 fs-md"><b>Hujan</b></h5>
-                                                                <div class="fs-sm">
-                                                                    <p class="mb-1 text-primary"><b>Fantasi</b></p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td style="border: 1px solid #e9e9e9; border-right: none;border-left: none; text-align: center; width: 20%;">
-                                                            <!-- Rating -->
-                                                            8.0
-                                                        </td>
-                                                        <td style="border: 1px solid #e9e9e9; border-radius: 0 0.375rem 0.375rem 0; text-align: center; width: 20%;">
-                                                            <!-- Tombol Trash -->
-                                                            <button class="btn btn-sm">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24">
-                                                                    <path d="M 10 2 L 9 3 L 5 3 C 4.4 3 4 3.4 4 4 C 4 4.6 4.4 5 5 5 L 7 5 L 17 5 L 19 5 C 19.6 5 20 4.6 20 4 C 20 3.4 19.6 3 19 3 L 15 3 L 14 2 L 10 2 z M 5 7 L 5 20 C 5 21.1 5.9 22 7 22 L 17 22 C 18.1 22 19 21.1 19 20 L 19 7 L 5 7 z M 9 9 C 9.6 9 10 9.4 10 10 L 10 19 C 10 19.6 9.6 20 9 20 C 8.4 20 8 19.6 8 19 L 8 10 C 8 9.4 8.4 9 9 9 z M 15 9 C 15.6 9 16 9.4 16 10 L 16 19 C 16 19.6 15.6 20 15 20 C 14.4 20 14 19.6 14 19 L 14 10 C 14 9.4 14.4 9 15 9 z"></path>
-                                                                </svg>
-                                                                {{-- <i class="bi bi-trash"></i> --}}
-                                                            </button>
-                                                        </td>
-                                                    </tr>
+                                                    @guest
+                                                        <!-- Jika pengguna belum login -->
+                                                        <tr style="height: 80px; background-color: #ffffff; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); border-radius: 0.375rem;">
+                                                            <td colspan="4" style="text-align: center; padding: 20px;">
+                                                                <strong>Anda belum login</strong>
+                                                            </td>
+                                                        </tr>
+                                                    @endguest
+                                                
+                                                    @auth
+                                                        <!-- Jika pengguna sudah login -->
+                                                        @forelse ($collections as $collection)
+                                                            <tr style="height: 80px; background-color: #ffffff; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); border-radius: 0.375rem;">
+                                                                <td style="border: 1px solid #e9e9e9; border-radius: 0.375rem 0 0 0.375rem; text-align: center; width: 10%;">
+                                                                    <b>{{ $loop->iteration }}</b>
+                                                                </td>
+                                                                <td style="border: 1px solid #e9e9e9; border-right: none; text-align: left; width: 50%;">
+                                                                    <div class="m-3">
+                                                                        <h5 class="mb-0 fs-md"><b>{{ $collection->book->title }}</b></h5>
+                                                                        <div class="fs-sm">
+                                                                            <p class="mb-1 text-primary"><b>{{ $collection->book->category->name }}</b></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border: 1px solid #e9e9e9; border-right: none; border-left: none; text-align: center; width: 20%;">
+                                                                    {{ $collection->rating ?? '-' }}
+                                                                </td>
+                                                                <td style="border: 1px solid #e9e9e9; border-radius: 0 0.375rem 0.375rem 0; text-align: center; width: 20%;">
+                                                                    <button class="btn btn-sm">
+                                                                        <i class="bi bi-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr style="height: 80px; background-color: #ffffff; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); border-radius: 0.375rem;">
+                                                                <td colspan="4" style="text-align: center; padding: 20px;">
+                                                                    <strong>Anda belum memiliki koleksi.</strong>
+                                                                </td>
+                                                            </tr>
+                                                        @endforelse
+                                                    @endauth
                                                 </table>
                                             </div>
 
@@ -300,6 +316,7 @@
                 });
             </script>
 
+        </div>
         <section class="col-md-12 bg-white rounded-5" id="telat">
             <div class="container">
                 <div class="row">
