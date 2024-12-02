@@ -104,6 +104,11 @@ Route::prefix('officer')->middleware(['role:officer'])->group(function () {
         Route::put('{id}/return', [LoansController::class, 'returnBook'])->name('officer.loan.return');
         Route::delete('/{id}/delete', [LoansController::class, 'destroy'])->name('officer.loan.delete');
     });
+
+    Route::prefix('category')->group(function () {
+        Route::get('/', [BookCategoriesController::class, 'indexOfficer'])->name('officer.category.list');
+    });
+
 });
 
 // Rute untuk User (role:user)

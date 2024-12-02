@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -18,20 +19,18 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        // Cek role pengguna dan arahkan ke halaman sesuai
-        if ($user->role == 'admin') {
+        if ($user->hasRole('admin')) {
             return redirect()->route('adminDashboard');
         }
 
-        if ($user->role == 'officer') {
+        if ($user->hasRole('officer')) {
             return redirect()->route('officerDashboard');
         }
 
-        if ($user->role == 'user') {
+        if ($user->hasRole('user')) {
             return redirect()->route('home.index');
         }
 
-        // Jika role tidak dikenal, arahkan ke halaman utama
         return redirect('/');
     }
 }
