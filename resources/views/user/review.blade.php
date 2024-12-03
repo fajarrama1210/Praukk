@@ -106,21 +106,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item ms-3">
-                            <a class="nav-link  aria-current="page"
-                                href="#home">Beranda</a>
-                        </li>
-                        <li class="nav-item ms-3">
-                            <a class="nav-link"
-                                href="#katalog">Katalog Buku</a>
-                        </li>
-                        <li class="nav-item ms-3">
-                            <a class="nav-link"
-                                href="#telat">Keterlambatan</a>
-                        </li>
-                        <li class="nav-item ms-3 bg-primary rounded-3" style="width: 80px;">
+                        <li class="nav-item ms-3 bg-primary rounded-3" style="width: 300px;">
                             <a class="nav-link text-center"
-                                href="{{ route('login') }}" style="color: aliceblue">Login</a>
+                                href="{{ route('home.index') }}" style="color: aliceblue">Kembali ke menu utama</a>
                         </li>
                     </ul>
                 </div>
@@ -131,21 +119,113 @@
         <div class="container">
             <div class="flex-shrink-0">
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-body d-flex align-items-center flex-column" style="height:100vh">
+                            <h3 class="text-center">Buku</h3>
+                            <section class="flex-shrink-0" style="width: 85vw; padding: 10px;">
+                                <div class="container mb-4">
+                                    <div class="card-body">
+                                        <div class="row gx-3 gy-2 align-items-center">
+                                            <div class="col-md-3 ">
+                                                <label class="form-label" for="selectTypeOpt">PENCARIAN DATA</label>
+                                                <form action="{{ url('book') }}" method="GET" class="row gy-2 gx-3 align-items-center" onsubmit="return checkForLogin()">
+                                                    <input type="hidden" name="filter_on" value="true">
+                                                    <div class="col- mb-2">
+                                                        <label class="visually-hidden" for="filter_name">Kata kunci Nama</label>
+                                                        <input type="text" class="form-control" id="filter_name" name="filter_name"
+                                                            value="{{ $filter['filter_name'] ?? '' }}" placeholder="Kata kunci Nama">
+                                                    </div>
+                                                    <div class="col-md-auto mb-2">
+                                                        <label class="visually-hidden" for="filter_category_id">Kategori</label>
+                                                        <select class="form-select" id="filter_category_id" name="filter_category_id">
+                                                            <option value="">Semua Kategori</option>
+                                                            @foreach ($bookCategories as $b)
+                                                                <option value="{{ $b->id }}" @selected($b->id == ($filter['filter_category_id'] ?? ''))>
+                                                                    {{ $b->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-0">
+                                                        <button type="submit" class="btn btn-primary"><b class="bg-transparent">Pencarian</b></button>
+                                                        @if (!empty($filter['filter_on']))
+                                                            <a href="{{ url('book') }}" class="btn btn-outline-secondary ms-1">Reset Filter</a>
+                                                        @endif
+                                                    </div>
+                                                </form>
+    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <hr class="mb-5 container">
+    
+                                <div class="container">
+                                    <div class="row">
+                                        @foreach ($books as $b)
+                                            <div class="col-md-6 mb-1">
+                                                <div class="card card-default mb-4" data-bs-toggle="modal" data-bs-target="#bookModal{{ $b->id }}">
+                                                    <div class="card-body">
+                                                        <h5 class="mb-0"><b>{{ $b->title }}</b></h5>
+                                                        <p class="text-primary mb-1"><b>{{ $b->category->name }}</b></p>
+                                                        <p class="text-gray-md">{{ $b->publish_year }}</p>
+                                                    </div>
+                                                    <div class="card-footer d-flex justify-content-between" style="height: 70px">
+                                                        <p class="text-gray-md">Stok:{{ $b->stock }}</p>
+                                                        @if ($b->stock > 0)
+                                                            <span class="badge bg-success">Tersedia</span>
+                                                        @else
+                                                            <span class="badge bg-warning">Tidak Tersedia</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+    
+                                                <!-- Modal Detail Buku -->
+                                                <div class="modal fade" id="bookModal{{ $b->id }}" tabindex="-1" aria-labelledby="bookModalLabel{{ $b->id }}" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="bookModalLabel{{ $b->id }}">{{ $b->title }}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p><strong>Kategori:</strong> {{ $b->category->name }}</p>
+                                                                <p><strong>Tahun Terbit:</strong> {{ $b->publish_year }}</p>
+                                                                <p><strong>Stok:</strong> {{ $b->stock }}</p>
+                                                                <p><strong>Deskripsi:</strong> {{ $b->description }}</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+    
+                                        @if (!count($books))
+                                            <div class="text-center text-gray-md">
+                                                <img src="{{ url('admin-ui') }}/assets/images/empty-book.png" class="img-fluid mt-2 mt-md-0"
+                                                    alt="" width="200">
+                                                <h5 class="mt-4 mb-1">Buku tidak ditemukan 🙁</h5>
+                                                <p>Coba sesuaikan filter atau hubungi admin perpustakaan</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+    
+                            </section>
+                            <section class="col-md-12">
+                                <div class="flex-shrink-0">
+                                    <div class="container mb-4 card-body d-flex align-items-center flex-column">
+                                        <h3 class="text-ceter">Ulasan Buku</h2>
 
-                    {{-- @forelse ($collections as $collection) --}}
-                    <div class="col-md-12 mb-4">
-                        <div class="">
-                            <div class="card-body d-flex align-items-center flex-column" style="width: 90vw; height:100vh">
-                                <h3 class=" text-center">Koleksi Anda</h3>
-
-                                
-
-                            </div>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
-                    {{-- @empty --}}
-                    {{-- <p class="text-center">Anda belum memiliki koleksi.</p> --}}
-                    {{-- @endforelse --}}
                 </div>
             </div>
         </div>

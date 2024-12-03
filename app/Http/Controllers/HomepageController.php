@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 use App\Models\BookCategory;
-<<<<<<< HEAD
 use App\Models\PersonsalCollections;
-=======
 use App\Models\Books;
 use App\Models\Loans;
 use Carbon\Carbon;
->>>>>>> 5fd41fa4e4523e2806d6d838a3c9c8e7f5acdd8b
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Books;
 use Illuminate\Support\Facades\Auth;
 
 class HomepageController extends Controller
@@ -23,21 +19,45 @@ class HomepageController extends Controller
             // Mengambil koleksi pribadi pengguna yang login
             $collections = PersonsalCollections::with(['user', 'book'])->get();
 
-            // Cek apakah koleksi kosong
-            if ($collections->isEmpty()) {
-                return view('user.home', [
-                    'message' => 'Anda belum memiliki koleksi pribadi. Silakan tambahkan koleksi pertama Anda!'
-                ]);
+            $bookCategories  = BookCategory::all();
+
+            $books = Books::query();
+
+            // Terapkan filter berdasarkan parameter request
+            if ($request->has('filter_name') && $request->filter_name) {
+                $books = $books->where('name', 'like', '%' . $request->filter_name . '%');
             }
 
+            if ($request->has('filter_category_id') && $request->filter_category_id) {
+                $books = $books->where('category_id', $request->filter_category_id);
+            }
+
+            // Paginate the books (10 per page)
+            $books = $books->paginate(10);
+
+
+            $this->checkLateLoans(); // This updates the late loans
+
+            // Get the status filter from the request
+            $status = $request->input('status', '');
+
+            // Cek apakah koleksi kosong
+            
+            $status = $request->input('status', '');
+
+            // Fetch loans based on the filter status
+            $loans = Loans::when($status, function ($query, $status) {
+                return $query->where('status', $status);
+            })->paginate(10); // Paginate the results
+
             // Jika ada koleksi, tampilkan koleksi pribadi
-            return view('user.home', compact('collections'));
+            return view('user.home', compact('collections', 'books', 'bookCategories', 'loans'));
         }
 
         // Jika pengguna belum login, tampilkan buku dengan filter
         else {
             // Ambil semua kategori buku untuk filter
-            $bookCategories = BookCategory::all();
+            $bookCategories  = BookCategory::all();
 
             // Mulai query untuk model Books
             $books = Books::query();
@@ -51,18 +71,29 @@ class HomepageController extends Controller
                 $books = $books->where('category_id', $request->filter_category_id);
             }
 
-            // Paginasikan buku (10 per halaman)
+            // Paginate the books (10 per page)
             $books = $books->paginate(10);
 
-            // Kembalikan tampilan dengan buku yang difilter dan dipaginasi
+            // Fetch loans and process late loans
+            $this->checkLateLoans(); // This updates the late loans
+
+            // Get the status filter from the request
+            $status = $request->input('status', '');
+
+            // Fetch loans based on the filter status
+            $loans = Loans::when($status, function ($query, $status) {
+                return $query->where('status', $status);
+            })->paginate(10); // Paginate the results
+
+            // Return the view with books, loans, and filter data
             return view('user.home', [
                 'books' => $books,
-                'bookCategories' => $bookCategories,
-                'filter' => $request->all(), // Kirimkan data filter ke view
+                'bookCategories' => $bookCategories ,
+                'filter' => $request->all(), // Pass the filter data back to the view
+                'loans' => $loans, // Pass the loans data
+                'status' => $status, // Pass the status filter
             ]);
         }
-<<<<<<< HEAD
-=======
 
         // Paginate the books (10 per page)
         $books = $books->paginate(10);
@@ -86,7 +117,6 @@ class HomepageController extends Controller
             'loans' => $loans, // Pass the loans data
             'status' => $status, // Pass the status filter
         ]);
->>>>>>> 5fd41fa4e4523e2806d6d838a3c9c8e7f5acdd8b
     }
 
     public function checkLateLoans()
@@ -119,4 +149,36 @@ class HomepageController extends Controller
             }
         }
     }
-}
+
+    public function review(Request $request)
+    {
+
+            $bookCategories  = BookCategory::all();
+
+            $books = Books::query();
+
+            // Terapkan filter berdasarkan parameter request
+            if ($request->has('filter_name') && $request->filter_name) {
+                $books = $books->where('name', 'like', '%' . $request->filter_name . '%');
+            }
+
+            if ($request->has('filter_category_id') && $request->filter_category_id) {
+                $books = $books->where('category_id', $request->filter_category_id);
+            }
+
+            // Paginate the books (10 per page)
+            $books = $books->paginate(10);
+
+            // Get the status filter from the request
+            $status = $request->input('status', '');
+
+            // Cek apakah koleksi kosong
+            
+            $status = $request->input('status', '');
+
+            // Fetch loans based on the filter status
+
+            // Jika ada koleksi, tampilkan koleksi pribadi
+            return view('user.review', compact('bookCategories', 'books',));
+        }
+    }

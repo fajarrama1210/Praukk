@@ -122,6 +122,17 @@
                             <a class="nav-link text-center"
                                 href="/login" style="color: aliceblue">Login</a>
                         </li>
+                        @auth
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    <i class="bx bx-power-off"></i>
+                                    <span class="align-middle">Log Out</span>
+                                </button>
+                            </form>
+                        </li>
+                        @endauth
                     </ul>
                 </div>
             </div>
