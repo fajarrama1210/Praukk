@@ -16,6 +16,7 @@ use App\Http\Controllers\LibraryOfficerController;
 Auth::routes();
 // Halaman depan untuk semua pengguna (User)
 Route::get('/', [HomepageController::class, 'dashuser'])->name('home.index');
+Route::get('/review', [HomepageController::class, 'review'])->name('user.review');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
@@ -108,3 +109,4 @@ Route::prefix('officer')->middleware(['role:officer'])->group(function () {
 Route::prefix('user')->middleware(['role:user'])->group(function () {
     // Rute lainnya untuk pengguna biasa bisa ditambahkan di sini
 });
+
