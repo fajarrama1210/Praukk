@@ -24,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         view()->share('categories', BookCategory::all());
-        // Mendaftarkan middleware role untuk aplikasi
         Route::middleware([RoleMiddleware::class])->group(function () {
             Route::get('/admin', 'AdminController@index')->name('adminDashboard');
             Route::get('/officer', 'OfficerController@index')->name('officerDashboard');

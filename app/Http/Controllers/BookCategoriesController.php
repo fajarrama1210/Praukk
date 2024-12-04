@@ -13,10 +13,8 @@ class BookCategoriesController extends Controller
      */
     public function index()
     {
-        // Mengambil semua data kategori buku dari database
         $categories = BookCategory::all();
 
-        // Menyajikan data kategori ke dalam view 'admin.category.list'
         return view('admin.category.list', compact('categories'));
     }
 
@@ -31,7 +29,6 @@ class BookCategoriesController extends Controller
      */
     public function create()
     {
-        // Mengarahkan ke view 'admin.category.add' untuk menambahkan kategori baru
         return view('admin.category.add');
     }
 
@@ -40,17 +37,14 @@ class BookCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        // Melakukan validasi data yang diinput oleh pengguna
         $request->validate([
-            'name' => 'required|string|max:255', // nama kategori wajib diisi, berupa string, maksimal 255 karakter
+            'name' => 'required|string|max:255',
         ]);
 
-        // Menyimpan data kategori baru ke dalam tabel 'book_categories'
         BookCategory::create([
             'name' => $request->name,
         ]);
 
-        // Mengarahkan kembali ke halaman daftar kategori dengan pesan sukses
         return redirect()->route('admin.category.list')->with('success', 'Kategori berhasil ditambahkan');
     }
 
@@ -67,7 +61,6 @@ class BookCategoriesController extends Controller
      */
     public function edit(BookCategory $bookCategory)
     {
-        // Mengarahkan ke view 'admin.category.update' dengan data kategori yang akan diedit
         return view('admin.category.update', compact('bookCategory'));
     }
 
@@ -76,9 +69,8 @@ class BookCategoriesController extends Controller
      */
     public function update(Request $request, BookCategory $bookCategory)
     {
-        // Melakukan validasi data yang diinput oleh pengguna
         $request->validate([
-            'name' => 'required|string|max:255', // nama kategori wajib diisi, berupa string, maksimal 255 karakter
+            'name' => 'required|string|max:255', 
         ]);
 
         // Memperbarui data kategori dengan input baru

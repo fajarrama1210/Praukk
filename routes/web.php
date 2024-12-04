@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentMajorController;
 use App\Http\Controllers\BookCategoriesController;
 use App\Http\Controllers\HomepageController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\LibraryOfficerController;
 
 Auth::routes();
 // Halaman depan untuk semua pengguna (User)
@@ -21,10 +22,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::view('/access-denied', 'access-denied')->name('access-denied');
 
 Route::prefix('admin')->middleware(['role:admin'])->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('adminDashboard');
-
+    Route::get('/', [AdminController::class, 'index'])->name('adminDashboard');
     // Rute untuk kategori
     Route::prefix('category')->group(function () {
         Route::get('/', [BookCategoriesController::class, 'index'])->name('admin.category.list');
@@ -54,17 +52,12 @@ Route::prefix('admin')->middleware(['role:admin'])->group(function () {
     });
 
     Route::prefix('libraryOfficer')->group(function () {
-        Route::get('/add', function () {
-            return view('admin.libraryOfficer.add');
-        })->name('admin.libraryOfficer.add');
-
-        Route::get('/', function () {
-            return view('admin.libraryOfficer.list');
-        })->name('admin.libraryOfficer.list');
-
-        Route::get('/update', function () {
-            return view('admin.libraryOfficer.update');
-        })->name('admin.libraryOfficer.updat');
+        Route::get('/', [LibraryOfficerController::class, 'index'])->name('admin.libraryOfficer.list');
+        Route::get('/add', [LibraryOfficerController::class, 'create'])->name('admin.libraryOfficer.add');
+        Route::post('/add', [LibraryOfficerController::class, 'store'])->name('admin.libraryOfficer.store');
+        Route::get('/{user}/edit', [LibraryOfficerController::class, 'edit'])->name('admin.libraryOfficer.edit');
+        Route::put('/{user}', [LibraryOfficerController::class, 'update'])->name('admin.libraryOfficer.put');
+        Route::delete('/{user}', [LibraryOfficerController::class, 'destroy'])->name('admin.libraryOfficer.delete');
     });
 
 });
