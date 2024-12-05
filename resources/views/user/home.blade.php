@@ -67,11 +67,41 @@
                 <button class="btn m-3 mb-0" id="prevButton"> Katalog</button>
                 <button class="btn m-3 mb-0" id="nextButton">Koleksi </button>
             </div>
+
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            
+            {{-- @if(session('auth'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('auth') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif --}}
+
+            <script>
+                document.querySelectorAll('.btn-close').forEach(button => {
+                    button.addEventListener('click', () => {
+                        button.closest('.alert').remove();
+                    });
+                });
+            </script>
+
             <!-- Wrapper untuk kedua section -->
-                <div style="width: 300%;">
-                    <div class="d-flex overflow-hidden" id="sliderWrapper" style="width: 90%; height: 100%; transition: transform 0.5s ease-in-out;">
+                <div style="width: 400%;">
+                    <div class="d-flex overflow-hidden" id="sliderWrapper" style="width: 100%; height: 100%; transition: transform 0.5s ease-in-out;">
                         <!-- Section Kiri: Katalog Buku -->
-                        <div class="flex-shrink-0" style="width: 85vw; padding: 10px;">
+                        <div class="flex-shrink-0" style="width: 25%;">
                             <div class="container pt-5 pb-2">
                                     <a href="#home" class="btn btn-sm btn-outline-secondary rounded-3 mb-3">← Kembali</a>
                                     <div class="p-3 p-md-0 pb-md-4">
@@ -123,7 +153,7 @@
                                         </div>
                                         {{-- <div class="col-md-3"></div>     --}}
                                         <div class="col-md-9 ">
-                                            <div class="d-flex justify-content-end">
+                                            <div class="d-flex justify-content-center">
                                                 <div class="col-md-6 pt-3">
                                                     <a href="{{ route ('user.review')}}" class="text-decoration-none">
                                                         <div class="card card-menu">
@@ -162,10 +192,19 @@
                                     @foreach ($books as $b)
                                         <div class="col-md-6 mb-1">
                                             <div class="card card-default mb-4" data-bs-toggle="modal" data-bs-target="#bookModal{{ $b->id }}">
-                                                <div class="card-body">
-                                                    <h5 class="mb-0"><b>{{ $b->title }}</b></h5>
-                                                    <p class="text-primary mb-1"><b>{{ $b->category->name }}</b></p>
-                                                    <p class="text-gray-md">{{ $b->publish_year }}</p>
+                                                <div class="card-body d-flex justify-content-between">
+                                                    <div>
+                                                        <h5 class="mb-0"><b>{{ $b->title }}</b></h5>
+                                                        <p class="text-primary mb-1"><b>{{ $b->category->name }}</b></p>
+                                                        <p class="text-gray-md">{{ $b->publish_year }}</p>
+                                                    </div>
+                                                    <form action="{{ route('add.collection') }}" method="POST" style="margin: 0;" @guest onsubmit="return showLoginAlert();" @endguest>
+                                                        @csrf
+                                                        <input type="hidden" name="book_id" value="{{ $b->id }}">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Tambah Koleksi +
+                                                        </button>
+                                                    </form>                                                                                                     
                                                 </div>
                                                 <div class="card-footer d-flex justify-content-between" style="height: 70px">
                                                     <p class="text-gray-md">Stok:{{ $b->stock }}</p>
@@ -220,7 +259,7 @@
                                 {{-- @forelse ($collections as $collection) --}}
                                 <div class="col-md-12 mb-4">
                                     <div class=" h-100">
-                                        <div class="card-body d-flex align-items-center flex-column" style="width: 90vw; height:100vh">
+                                        <div class="card-body d-flex align-items-center flex-column" style="width: 96%; height:100vh">
                                             <h3 class="mb-5 text-center">Koleksi Anda</h3>
 
                                             <div class="container my-4">
@@ -296,9 +335,16 @@
                                                                     {{ $collection->rating ?? '-' }}
                                                                 </td>
                                                                 <td style="border: 1px solid #e9e9e9; border-radius: 0 0.375rem 0.375rem 0; text-align: center; width: 20%;">
-                                                                    <button class="btn btn-sm">
-                                                                        <i class="bi bi-trash"></i>
-                                                                    </button>
+                                                                    <form action="{{ route('collections.destroy', $collection->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus koleksi ini?');">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button class="btn btn-sm" style="border-radius: 100%; width: 30px; height:30px; color: bisque">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24">
+                                                                                <path d="M 10 2 L 9 3 L 5 3 C 4.4 3 4 3.4 4 4 C 4 4.6 4.4 5 5 5 L 7 5 L 17 5 L 19 5 C 19.6 5 20 4.6 20 4 C 20 3.4 19.6 3 19 3 L 15 3 L 14 2 L 10 2 z M 5 7 L 5 20 C 5 21.1 5.9 22 7 22 L 17 22 C 18.1 22 19 21.1 19 20 L 19 7 L 5 7 z M 9 9 C 9.6 9 10 9.4 10 10 L 10 19 C 10 19.6 9.6 20 9 20 C 8.4 20 8 19.6 8 19 L 8 10 C 8 9.4 8.4 9 9 9 z M 15 9 C 15.6 9 16 9.4 16 10 L 16 19 C 16 19.6 15.6 20 15 20 C 14.4 20 14 19.6 14 19 L 14 10 C 14 9.4 14.4 9 15 9 z"></path>
+                                                                            </svg>
+                                                                            {{-- <i class="bi bi-trash"></i> --}}
+                                                                        </button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                         @empty
@@ -342,7 +388,7 @@
                 // Navigasi ke slide berikutnya
                 nextButton.addEventListener('click', () => {
                     currentSlide = Math.min(currentSlide + 1, 1); // Jangan geser lebih dari batas akhir
-                    sliderWrapper.style.transform = `translateX(-${currentSlide * 45}%)`;
+                    sliderWrapper.style.transform = `translateX(-${currentSlide * 35}%)`;
                 });
             </script>
 
@@ -400,6 +446,18 @@
         <section style="height: 300px; width:100vw;" class="bg-white">
             <div class="d-flex flex-column align-items-center justify-content-center">
                 <h3 class="text-center" style="margin-top: 100px">Read some knowledge never wrong</h3>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function showLoginAlert() {
+            alert("Harus login terlebih dahulu untuk menambah koleksi!");
+            return false; // Mencegah form untuk dikirim
+        }
+    </script>
+    
+   <h3 class="text-center" style="margin-top: 100px">Read some knowledge never wrong</h3>
             </div>
         </section>
     </div>

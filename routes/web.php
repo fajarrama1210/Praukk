@@ -18,8 +18,10 @@ use App\Http\Controllers\UserRoleController;
 Auth::routes();
 // Halaman depan untuk semua pengguna (User)
 Route::get('/', [HomepageController::class, 'dashuser'])->name('home.index');
+Route::post('/add/collection', [HomepageController::class, 'addCollection'])->name('add.collection');
 Route::get('/review', [HomepageController::class, 'review'])->name('user.review');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::delete('/collections/{id}', [HomepageController::class, 'destroy'])->name('collections.destroy');
 
 
 // Route::view('/access-denied', 'access-denied')->name('access-denied');

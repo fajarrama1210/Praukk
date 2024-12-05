@@ -8,5 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class BookReviews extends Model
 {
     /** @use HasFactory<\Database\Factories\BookReviewsFactory> */
+    
     use HasFactory;
+    protected $guarded = ['id'];
+    protected $with = ['user', 'book'];
+
+    protected $fillable = ['review', 'rating'];
+
+    public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function book()
+    {
+        return $this->belongsTo(Books::class, 'book_id');
+    }
 }
