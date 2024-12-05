@@ -73,18 +73,22 @@
                 <!-- Content wrapper -->
                 @if (session('success'))
                     <script>
-                        Swal.fire({
-                            icon: "success",
-                            title: {!! json_encode(session('success')) !!},
+                        const Toast = Swal.mixin({
+                            toast: true,
                             position: "top-end",
                             showConfirmButton: false,
                             timer: 3000,
                             timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: {!! json_encode(session('success')) !!},
                             customClass: {
                                 container: 'container-positioning',
-                            },
-                            didOpen: () => {
-                                document.body.classList.remove('swal2-toast-shown'); // Mencegah konflik fokus input
                             }
                         });
                     </script>
@@ -135,6 +139,8 @@
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
 
     @stack('scripts')
+
+
 </body>
 
 </html>
