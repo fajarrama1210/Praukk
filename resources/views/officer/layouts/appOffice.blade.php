@@ -44,6 +44,15 @@
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        .container-positioning {
+            z-index: 99999 !important;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -63,6 +72,50 @@
                     @yield('content')
                 </div>
                 <!-- Content wrapper -->
+                @if (session('success'))
+                    <script>
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: {!! json_encode(session('success')) !!},
+                            customClass: {
+                                container: 'container-positioning',
+                            }
+                        });
+                    </script>
+                @endif
+                @if (session('error'))
+                    <script>
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: {!! json_encode(session('error')) !!},
+                            customClass: {
+                                container: 'container-positioning',
+                            }
+                        });
+                    </script>
+                @endif
             </div>
             <!-- / Layout page -->
         </div>

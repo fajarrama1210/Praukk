@@ -13,6 +13,7 @@ use App\Http\Controllers\StudentMajorController;
 use App\Http\Controllers\BookCategoriesController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\LibraryOfficerController;
+use App\Http\Controllers\OfficerControllerController;
 use App\Http\Controllers\UserRoleController;
 
 Auth::routes();
@@ -76,10 +77,8 @@ Route::prefix('admin')->middleware(['role:admin'])->group(function () {
 
 // Rute untuk Officer dengan middleware role:officer
 Route::prefix('officer')->middleware(['role:officer'])->group(function () {
-    // Dashboard Officer
-    Route::get('/', function () {
-        return view('officer.dashboard');
-    })->name('officerDashboard');
+
+    Route::get('/', [OfficerControllerController::class, 'index'])->name('officerDashboard');
 
     // Rute untuk rak buku
     Route::prefix('bookshelf')->group(function () {
