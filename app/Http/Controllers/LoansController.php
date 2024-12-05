@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LoansExport;
 use App\Models\Books;
 use App\Models\Loans;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LoansController extends Controller
 {
@@ -131,5 +133,10 @@ class LoansController extends Controller
         $loan->delete();
 
         return redirect()->route('officer.loan.list')->with('success', 'Berhasil hapus data peminjaman.');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new LoansExport, 'loans.xlsx');
     }
 }

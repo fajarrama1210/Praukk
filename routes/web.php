@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\LoansExport;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -107,6 +108,7 @@ Route::prefix('officer')->middleware(['role:officer'])->group(function () {
         Route::post('/store', [LoansController::class, 'store'])->name('officer.loan.store');
         Route::put('{id}/return', [LoansController::class, 'returnBook'])->name('officer.loan.return');
         Route::delete('/{id}/delete', [LoansController::class, 'destroy'])->name('officer.loan.delete');
+        Route::get('/siswa/export_excel', [LoansController::class, 'exportExcel'])->name('officer.loans.export');
     });
 
     Route::prefix('category')->group(function () {

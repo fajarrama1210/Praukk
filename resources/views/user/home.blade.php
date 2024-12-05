@@ -457,8 +457,6 @@
         }
     </script>
     
-   <h3 class="text-center" style="margin-top: 100px">Read some knowledge never wrong</h3>
-            </div>
         </section>
     </div>
 @endsection

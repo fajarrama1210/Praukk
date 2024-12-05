@@ -41,9 +41,14 @@
             <div class="row g-0">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Daftar Peminjaman</h5>
-                    <a href="{{ route('officer.loan.add') }}">
-                        <button class="btn btn-primary">Buat Peminjaman</button>
-                    </a>
+                    <div>
+                        <a href="{{ route('officer.loans.export') }}" class="m-4">
+                            <button class="btn btn-primary ">export excel</button>
+                        </a>
+                        <a href="{{ route('officer.loan.add') }}">
+                            <button class="btn btn-primary">Buat Peminjaman</button>
+                        </a>
+                    </div>
                 </div>
                 <table class="table">
                     <thead>
