@@ -22,6 +22,7 @@
                         <th>TAHUN TERBIT</th>
                         <th>KATEGORI</th>
                         <th>KODE BUKU</th>
+                        <th>RAK</th>
                         <th>AKSI</th>
                     </tr>
                 </thead>
@@ -37,6 +38,7 @@
                         <td>{{ $book->publish_year }}</td>
                         <td>{{ $book->category->name }}</td>
                         <td>{{ $book->code }}</td>
+                        <td>{{ $book->shelves->name }}</td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

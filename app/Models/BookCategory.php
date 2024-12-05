@@ -18,6 +18,6 @@ class BookCategory extends Model
      */
     public function books(): HasMany
     {
-        return $this->hasMany(Books::class); // Menghubungkan ke model Book
+        return $this->hasMany(Books::class); 
     }
 }
