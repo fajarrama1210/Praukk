@@ -138,7 +138,7 @@
                                                 <button type="submit" class="btn btn-primary"><b
                                                         class="bg-transparent">Pencarian</b></button>
                                                 @if (!empty($filter['filter_on']))
-                                                    <a href="{{ route('book.index') }}"
+                                                    <a href="{{ route('home.index') }}"
                                                         class="btn btn-outline-secondary ms-1">Reset Filter</a>
                                                 @endif
                                             </div>
