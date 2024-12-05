@@ -90,14 +90,16 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             @if ($loan->status === 'borrowed')
-                                                <form action="{{ route('officer.loan.return', $loan->id) }}"
-                                                    method="POST">
+                                                <form action="{{ route('officer.loan.return', $loan->id) }}" method="POST"
+                                                    class="d-inline">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button class="dropdown-item" type="submit"><i
-                                                            class="bx bx-arrow-back me-2"></i>Kembalikan</button>
+                                                    <button class="dropdown-item" type="submit">
+                                                        <i class="bx bx-arrow-back me-2"></i>Kembalikan
+                                                    </button>
                                                 </form>
                                             @endif
+
                                             <!-- Delete Form -->
                                             <form action="{{ route('officer.loan.delete', $loan->id) }}" method="POST"
                                                 class="d-inline">

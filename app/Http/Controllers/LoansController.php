@@ -21,11 +21,11 @@ class LoansController extends Controller
 
             // Periksa jika tanggal kembali sudah lewat hari ini
             if ($returnDate->lt(Carbon::today())) {
-                $lateDays = now()->diffInDays($returnDate, false);
-
+                // Menghitung keterlambatan dengan nilai positif
+                $lateDays = Carbon::today()->diffInDays($returnDate); // Akan menghasilkan angka positif jika terlambat
                 $loan->update([
                     'status' => 'lated',
-                    'late_days' => abs($lateDays),
+                    'late_days' => abs($lateDays), // Set late_days sesuai perhitungan
                 ]);
             }
             // Periksa jika tanggal kembali adalah hari ini
@@ -34,14 +34,10 @@ class LoansController extends Controller
                     'status' => 'borrowed',
                     'late_days' => 0, // Tidak dihitung keterlambatan
                 ]);
-            } else {
-                $loan->update([
-                    'status' => 'borrowed',
-                    'late_days' => 0,
-                ]);
             }
         }
     }
+
 
     public function index(Request $request)
     {
@@ -106,10 +102,12 @@ class LoansController extends Controller
     {
         $loan = Loans::findOrFail($id);
 
+        // Periksa jika status bukan 'borrowed' atau 'lated'
         if ($loan->status !== 'borrowed') {
-            return redirect()->back()->withErrors(['error' => 'Buku sudah dikembalikan!']);
+            return redirect()->back()->with('error', 'Buku sudah dikembalikan atau status tidak valid!');
         }
 
+        // Update status menjadi 'returned'
         $loan->update(['status' => 'returned']);
 
         // Tambah stok buku
@@ -118,6 +116,9 @@ class LoansController extends Controller
 
         return redirect()->route('officer.loan.list')->with('success', 'Buku berhasil dikembalikan!');
     }
+
+
+
 
     public function destroy($id)
     {

@@ -65,14 +65,11 @@ Route::prefix('admin')->middleware(['role:admin'])->group(function () {
         Route::put('/{user}', [LibraryOfficerController::class, 'update'])->name('admin.libraryOfficer.put');
         Route::delete('/{user}', [LibraryOfficerController::class, 'destroy'])->name('admin.libraryOfficer.delete');
         Route::get('/libraryOfficer/{user}/detail', [LibraryOfficerController::class, 'show'])->name('admin.libraryOfficer.detail');
-
     });
 
     Route::prefix('roleUser')->group(function () {
         Route::get('/', [UserRoleController::class, 'index'])->name('admin.roleUser.list');
     });
-
-
 });
 
 // Rute untuk Officer dengan middleware role:officer
@@ -105,7 +102,7 @@ Route::prefix('officer')->middleware(['role:officer'])->group(function () {
         Route::get('/', [LoansController::class, 'index'])->name('officer.loan.list');
         Route::get('/add', [LoansController::class, 'create'])->name('officer.loan.add');
         Route::post('/store', [LoansController::class, 'store'])->name('officer.loan.store');
-        Route::put('{id}/return', [LoansController::class, 'returnBook'])->name('officer.loan.return');
+        Route::put('/{id}/return', [LoansController::class, 'returnBook'])->name('officer.loan.return');
         Route::delete('/{id}/delete', [LoansController::class, 'destroy'])->name('officer.loan.delete');
         Route::get('/siswa/export_excel', [LoansController::class, 'exportExcel'])->name('officer.loans.export');
     });
@@ -113,11 +110,9 @@ Route::prefix('officer')->middleware(['role:officer'])->group(function () {
     Route::prefix('category')->group(function () {
         Route::get('/', [BookCategoriesController::class, 'indexOfficer'])->name('officer.category.list');
     });
-
 });
 
 // Rute untuk User (role:user)
 Route::prefix('user')->middleware(['role:user'])->group(function () {
     // Rute lainnya untuk pengguna biasa bisa ditambahkan di sini
 });
-
