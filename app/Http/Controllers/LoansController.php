@@ -38,7 +38,6 @@ class LoansController extends Controller
         }
     }
 
-
     public function index(Request $request)
     {
         $this->checkLateLoans(); // Panggil fungsi untuk cek peminjaman terlambat
@@ -61,7 +60,7 @@ class LoansController extends Controller
      */
     public function create()
     {
-        $users = User::all();
+        $users = User::role('user')->get();
         $books = Books::where('stock', '>', 0)->get(); // Hanya buku dengan stok tersedia
         return view('officer.loan.add', compact('users', 'books'));
     }
@@ -116,9 +115,6 @@ class LoansController extends Controller
 
         return redirect()->route('officer.loan.list')->with('success', 'Buku berhasil dikembalikan!');
     }
-
-
-
 
     public function destroy($id)
     {

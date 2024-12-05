@@ -30,10 +30,6 @@
         class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
-    <!-- Select2 CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-
-
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
@@ -55,6 +51,7 @@
         }
     </style>
 
+    @stack('styles')
 </head>
 
 <body>
@@ -76,22 +73,18 @@
                 <!-- Content wrapper -->
                 @if (session('success'))
                     <script>
-                        const Toast = Swal.mixin({
-                            toast: true,
+                        Swal.fire({
+                            icon: "success",
+                            title: {!! json_encode(session('success')) !!},
                             position: "top-end",
                             showConfirmButton: false,
                             timer: 3000,
                             timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: {!! json_encode(session('success')) !!},
                             customClass: {
                                 container: 'container-positioning',
+                            },
+                            didOpen: () => {
+                                document.body.classList.remove('swal2-toast-shown'); // Mencegah konflik fokus input
                             }
                         });
                     </script>
@@ -141,9 +134,7 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
 
-    <!-- Select2 JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
+    @stack('scripts')
 </body>
 
 </html>
