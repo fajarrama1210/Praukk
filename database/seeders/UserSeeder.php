@@ -42,7 +42,47 @@ class UserSeeder extends Seeder
             ['email' => 'user@gmail.com'],
             [
                 'name' => 'Regular User',
-                'nisn' => '112233445',
+                'nisn' => '121200',
+                'password' => Hash::make('asdasd'),
+            ]
+        );
+        $regularUser->syncRoles([$userRole]);
+
+        $regularUser = User::firstOrCreate(
+            ['email' => 'ferren@gmail.com'],
+            [
+                'name' => 'Ferren Diovalda',
+                'nisn' => '121201',
+                'password' => Hash::make('asdasd'),
+            ]
+        );
+        $regularUser->syncRoles([$userRole]);
+
+        $regularUser = User::firstOrCreate(
+            ['email' => 'guido@gmail.com'],
+            [
+                'name' => 'Guido Winata Putra',
+                'nisn' => '121202',
+                'password' => Hash::make('asdasd'),
+            ]
+        );
+        $regularUser->syncRoles([$userRole]);
+
+        $regularUser = User::firstOrCreate(
+            ['email' => 'anggun@gmail.com'],
+            [
+                'name' => 'Anggun Mutiara Silvia Itaf Vandana',
+                'nisn' => '121203',
+                'password' => Hash::make('asdasd'),
+            ]
+        );
+        $regularUser->syncRoles([$userRole]);
+
+        $regularUser = User::firstOrCreate(
+            ['email' => 'jean@gmail.com'],
+            [
+                'name' => 'Jean Samuel Putra',
+                'nisn' => '121204',
                 'password' => Hash::make('asdasd'),
             ]
         );
