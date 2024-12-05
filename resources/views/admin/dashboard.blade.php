@@ -72,56 +72,45 @@
                     </div>
                 </div>
             </div>
+            
         </div>
-
-        {{-- <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title fw-semibold mb-0 lh-sm">Perbandingan Kehadiran</h5>
-                    </div>
-                    <div class="card-body">
-                        <div id="chart-attendence"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title fw-semibold mb-0 lh-sm">Siswa paling rajin</h5>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Kelas</th>
-                                <th>Jurusan</th>
-                                <th>Jumlah Kehadiran</th>
-                            </thead>
-                            <tbody>
-                                @forelse ($presencesUsers as $pu)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $pu->User->name }}</td>
-                                        <td>{{ $pu->Level->kelas }}</td>
-                                        <td>{{ $pu->Major->major }}</td>
-                                        <td>{{ $pu->total }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5">Data tidak ditemukan</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div> --}}
     </div>
+
+     <!-- Chart -->
+     <div class="row mt-4">
+        <div class="col-12">
+            <div id="chart"></div>
+        </div>
+    </div>
+
+    <script>
+        var options = {
+            series: [{
+                name: 'Peminjaman',
+                data: @json($chartData)
+            }],
+            chart: {
+                type: 'area',
+                height: 350
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                type: 'datetime',
+            },
+            tooltip: {
+                x: {
+                    format: 'dd/MM/yyyy'
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+
 @endsection
