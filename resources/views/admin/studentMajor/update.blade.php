@@ -12,12 +12,12 @@
                     <a href="{{ route('admin.studentMajor.list') }}" class="btn btn-info">Kembali</a>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.major.put', $major->id) }}" method="POST">
+                    <form action="{{ route('admin.major.put', $studentMajor->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
                             <label class="form-label" for="name">Nama</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ $major->name }}" placeholder="Masukkan Nama Jurusan" required />
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $studentMajor->name }}" placeholder="Masukkan Nama Jurusan" required />
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>

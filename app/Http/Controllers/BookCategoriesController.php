@@ -53,7 +53,6 @@ class BookCategoriesController extends Controller
      */
     public function show(BookCategory $bookCategory)
     {
-        // Metode ini kosong dan dapat diimplementasikan untuk menampilkan detail kategori tertentu jika diperlukan.
     }
 
     /**
@@ -70,15 +69,13 @@ class BookCategoriesController extends Controller
     public function update(Request $request, BookCategory $bookCategory)
     {
         $request->validate([
-            'name' => 'required|string|max:255', 
+            'name' => 'required|string|max:255',
         ]);
 
-        // Memperbarui data kategori dengan input baru
         $bookCategory->update([
             'name' => $request->name,
         ]);
 
-        // Mengarahkan kembali ke halaman daftar kategori dengan pesan sukses
         return redirect()->route('admin.category.list')->with('success', 'Kategori berhasil diperbarui');
     }
 
@@ -87,8 +84,7 @@ class BookCategoriesController extends Controller
      */
     public function destroy(BookCategory $bookCategory)
     {
-        $category = BookCategory::findOrFail($bookCategory);
-        $category->delete();
+        $bookCategory->delete(); 
         return redirect()->route('admin.category.list')->with('success', 'Kategori berhasil dihapus');
     }
-}
+    }

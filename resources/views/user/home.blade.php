@@ -276,7 +276,7 @@
                                                             </td>
                                                         </tr>
                                                     @endguest
-                                                
+
                                                     @auth
                                                         <!-- Jika pengguna sudah login -->
                                                         @forelse ($collections as $collection)
@@ -342,7 +342,7 @@
                 // Navigasi ke slide berikutnya
                 nextButton.addEventListener('click', () => {
                     currentSlide = Math.min(currentSlide + 1, 1); // Jangan geser lebih dari batas akhir
-                    sliderWrapper.style.transform = `translateX(-${currentSlide * 50}%)`;
+                    sliderWrapper.style.transform = `translateX(-${currentSlide * 45}%)`;
                 });
             </script>
 

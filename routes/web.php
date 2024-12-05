@@ -12,6 +12,7 @@ use App\Http\Controllers\StudentMajorController;
 use App\Http\Controllers\BookCategoriesController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\LibraryOfficerController;
+use App\Http\Controllers\UserRoleController;
 
 Auth::routes();
 // Halaman depan untuk semua pengguna (User)
@@ -20,11 +21,11 @@ Route::get('/review', [HomepageController::class, 'review'])->name('user.review'
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::view('/access-denied', 'access-denied')->name('access-denied');
+// Route::view('/access-denied', 'access-denied')->name('access-denied');
 
 Route::prefix('admin')->middleware(['role:admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('adminDashboard');
-    // Rute untuk kategori
+
     Route::prefix('category')->group(function () {
         Route::get('/', [BookCategoriesController::class, 'index'])->name('admin.category.list');
         Route::get('/add', [BookCategoriesController::class, 'create'])->name('admin.category.add');
@@ -55,11 +56,18 @@ Route::prefix('admin')->middleware(['role:admin'])->group(function () {
     Route::prefix('libraryOfficer')->group(function () {
         Route::get('/', [LibraryOfficerController::class, 'index'])->name('admin.libraryOfficer.list');
         Route::get('/add', [LibraryOfficerController::class, 'create'])->name('admin.libraryOfficer.add');
-        Route::post('/add', [LibraryOfficerController::class, 'store'])->name('admin.libraryOfficer.store');
+        Route::post('/store', [LibraryOfficerController::class, 'store'])->name('admin.libraryOfficer.store');
         Route::get('/{user}/edit', [LibraryOfficerController::class, 'edit'])->name('admin.libraryOfficer.edit');
         Route::put('/{user}', [LibraryOfficerController::class, 'update'])->name('admin.libraryOfficer.put');
         Route::delete('/{user}', [LibraryOfficerController::class, 'destroy'])->name('admin.libraryOfficer.delete');
+        Route::get('/libraryOfficer/{user}/detail', [LibraryOfficerController::class, 'show'])->name('admin.libraryOfficer.detail');
+
     });
+
+    Route::prefix('roleUser')->group(function () {
+        Route::get('/', [UserRoleController::class, 'index'])->name('admin.roleUser.list');
+    });
+
 
 });
 

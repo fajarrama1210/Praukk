@@ -21,9 +21,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($studentClasses as $index => $studentClass)
+                    @foreach ($studentClasses as  $studentClass)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $studentClass->name }}</td>
                             <td>
                                 <div class="dropdown">
