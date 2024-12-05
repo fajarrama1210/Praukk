@@ -11,6 +11,7 @@ use App\Http\Controllers\BookShelfController;
 use App\Http\Controllers\StudentClassController;
 use App\Http\Controllers\StudentMajorController;
 use App\Http\Controllers\BookCategoriesController;
+use App\Http\Controllers\BookReviewsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\LibraryOfficerController;
 use App\Http\Controllers\OfficerControllerController;
@@ -21,6 +22,7 @@ Auth::routes();
 Route::get('/', [HomepageController::class, 'dashuser'])->name('home.index');
 Route::post('/add/collection', [HomepageController::class, 'addCollection'])->name('add.collection');
 Route::get('/review', [HomepageController::class, 'review'])->name('user.review');
+Route::post('/review/add', [BookReviewsController::class, 'store'])->name('reviews.store');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::delete('/collections/{id}', [HomepageController::class, 'destroy'])->name('collections.destroy');
 

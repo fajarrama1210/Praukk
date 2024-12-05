@@ -154,7 +154,6 @@ class HomepageController extends Controller
 
     public function review(Request $request)
     {
-
         $bookCategories  = BookCategory::all();
 
         $books = Books::query();
@@ -208,7 +207,6 @@ class HomepageController extends Controller
         return redirect()->back()->with('success', 'Buku berhasil ditambahkan ke koleksi Anda.');
 
     }
-    
         /**
      * Hapus koleksi berdasarkan ID.
      *
@@ -235,4 +233,5 @@ class HomepageController extends Controller
 
         return redirect()->back()->with('success', 'Koleksi berhasil dihapus.');
     }
+    
 }

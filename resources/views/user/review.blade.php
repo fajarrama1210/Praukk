@@ -80,10 +80,37 @@
                                                     class="card card-default mb-4 text-start book-card"
                                                     data-id="{{ $b->id }}"
                                                     data-title="{{ $b->title }}">
-                                                    <div class="card-body">
-                                                        <h5 class="mb-0"><b>{{ $b->title }}</b></h5>
-                                                        <p class="text-primary mb-1"><b>{{ $b->category->name }}</b></p>
-                                                        <p class="text-gray-md">{{ $b->publish_year }}</p>
+                                                    <div class="card-body d-flex justify-content-between">
+                                                        <div>
+                                                            <h5 class="mb-0"><b>{{ $b->title }}</b></h5>
+                                                            <p class="text-primary mb-1"><b>{{ $b->category->name }}</b></p>
+                                                            <p class="text-gray-md">{{ $b->publish_year }}</p>
+                                                        </div>
+                                                        <div class="d-flex flex-col">
+                                                                <form action="" method="POST" style="margin: 0;" @guest onsubmit="return showLoginAlert();" @endguest>
+                                                                    @csrf
+                                                                    <input type="hidden" name="book_id" value="{{ $b->id }}">
+                                                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                                                        <button type="submit" class="bg-transparent" style="border: none">
+                                                                            <img src="{{ asset('like-2.png') }}" alt="like"
+                                                                                    style="width: 30px; height: 30px; background: transparent;">
+                                                                        </button>
+                                                                        <span>3</span>
+                                                                    </div>
+                                                                </form>                                                                                                     
+                                                                <form action="" method="POST" style="margin: 0;" @guest onsubmit="return showLoginAlert();" @endguest>
+                                                                    @csrf
+                                                                    <input type="hidden" name="book_id" value="{{ $b->id }}">
+                                                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                                                        <button type="submit" class="bg-transparent" style="border: none">
+                                                                            <img src="{{ asset('like-2.png') }}" alt="like"
+                                                                            style="width: 30px; height: 30px; background: transparent; transform: rotate(180deg);">
+                                                                        </button>
+                                                                        <span>3</span>
+                                                                    </div>
+                                                                </form>                                                                                                     
+                                                                
+                                                            </div>
                                                     </div>
                                                     <div class="card-footer d-flex justify-content-between"
                                                         style="height: 70px">
@@ -108,13 +135,25 @@
                                                         <h3 style="margin-left: 50px;">Ulasan Buku :<span id="reviewTitle" class="fw-bold mb-4"></span></h3>
                                                     </div>
                                                     <div class="form-group mt-4">
-                                                        <div class="input-group input-group-lg">
-                                                            <input type="text" class="form-control" style="width: 400px;" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="newComment" rows="3" placeholder="Tulis ulasan...">
+                                                        @auth
+                                                        <form action="{{ route('reviews.store') }}" method="POST" style="d-flex">
+                                                            @csrf
+                                                            <!-- Hidden input untuk book_id -->
+                                                            <input type="hidden" name="book_id" id="bookIdInput" value="">
+                                                            <input type="text" class="form-control" style="width: 400px;" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" id="newComment" rows="3" placeholder="Tulis ulasan..." name="comment">
                                                             <button class="input-group-text btn btn-primary" id="submitComment">Kirim</button>
-                                                        </div>
+                                                        </form>
+                                                        
+                                                        @else
+                                                            <p class="text-danger">Anda harus login untuk menulis ulasan.</p>
+                                                        @endauth
                                                     </div>
-                                                    <div id="commentsContainer">
-                                                        <p id="noComments" class="text-gray-md">Belum ada komentar.</p>
+                                                    {{-- @foreach ($review as $komen)
+                                                    
+                                                    @endforeach --}}
+                                                    <div style="margin-top: 50px">
+                                                        <span>User:</span>
+                                                        <span>Komen</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,60 +169,83 @@
     </section>
 
     <script>
-        let selectedBookId = null;
+document.addEventListener("DOMContentLoaded", () => {
+    let selectedBookId = null;
 
-        // Handle click event for book cards
-        document.querySelectorAll('.book-card').forEach(card => {
-            card.addEventListener('click', function () {
-                selectedBookId = this.dataset.id;
-                const title = this.dataset.title;
+    // Handle click event for book cards
+    document.querySelectorAll('.book-card').forEach(card => {
+        card.addEventListener('click', function () {
+            selectedBookId = this.dataset.id;
+            const title = this.dataset.title;
 
-                // Update book title in review section
-                document.getElementById('reviewTitle').innerText = title;
+            document.getElementById('reviewTitle').innerText = title;
+            document.getElementById('bookIdInput').value = selectedBookId;
 
-                // Fetch and display comments
-                fetchComments(selectedBookId);
-            });
+            // Fetch reviews for selected book
+            fetchReviews(selectedBookId);
         });
+    });
 
-        // Fetch comments from the server
-        function fetchComments(bookId) {
-            // Simulasi fetch data
-            const comments = @json($comments); // Ambil data dari Laravel
-            const filteredComments = comments.filter(comment => comment.book_id == bookId);
+    // Fetch reviews from the server
+    function fetchReviews(bookId) {
+        fetch(`/reviews/${bookId}`)
+            .then(response => response.json())
+            .then(reviews => {
+                const reviewsContainer = document.getElementById('commentsContainer');
+                reviewsContainer.innerHTML = '';
 
-            const commentsContainer = document.getElementById('commentsContainer');
-            commentsContainer.innerHTML = '';
+                if (reviews.length === 0) {
+                    reviewsContainer.innerHTML = '<p class="text-gray-md">Belum ada komentar.</p>';
+                } else {
+                    reviews.forEach(review => {
+                        const reviewElement = document.createElement('div');
+                        reviewElement.className = 'mb-3';
+                        reviewElement.innerHTML = `
+                            <p><b>${review.user.name}</b></p>
+                            <p>${review.review}</p>
+                            <hr>
+                        `;
+                        reviewsContainer.appendChild(reviewElement);
+                    });
+                }
+            });
+    }
 
-            if (filteredComments.length === 0) {
-                commentsContainer.innerHTML = '<p class="text-gray-md">Belum ada komentar.</p>';
-            } else {
-                filteredComments.forEach(comment => {
-                    const commentElement = document.createElement('div');
-                    commentElement.className = 'mb-3';
-                    commentElement.innerHTML = `
-                        <p><b>${comment.username}</b></p>
-                        <p>${comment.text}</p>
-                        <hr>
-                    `;
-                    commentsContainer.appendChild(commentElement);
-                });
-            }
+    // Submit review
+    document.getElementById('submitComment')?.addEventListener('click', function () {
+        const newCommentText = document.getElementById('newComment').value;
+
+        if (newCommentText.trim() === '') {
+            alert('Komentar tidak boleh kosong!');
+            return;
         }
 
-        // Handle new comment submission
-        document.getElementById('submitComment').addEventListener('click', function () {
-            const newCommentText = document.getElementById('newComment').value;
-
-            if (newCommentText.trim() === '') {
-                alert('Komentar tidak boleh kosong!');
-                return;
+        // Submit review to the server
+        fetch('/reviews', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                book_id: selectedBookId,
+                review: newCommentText
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchReviews(selectedBookId); // Refresh reviews
+                document.getElementById('newComment').value = ''; // Clear the input field
+            } else {
+                alert('Terjadi kesalahan, coba lagi.');
             }
-
-            // Simulasi post ke server
-            alert('Komentar berhasil dikirim!');
-            fetchComments(selectedBookId); // Refresh comments
         });
+    });
+});
+
+
+
     </script>
 </body>
 

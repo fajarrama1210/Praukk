@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('book_id');
-            $table->string('review');
-            $table->integer('rating');
+            $table->string('review')->nullable();
+            $table->integer('like')->nullable();
+            $table->integer('dislike')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('book_id')->references('id')->on('books')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
