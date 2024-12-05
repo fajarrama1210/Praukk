@@ -115,6 +115,4 @@ Route::prefix('officer')->middleware(['role:officer'])->group(function () {
 });
 
 // Rute untuk User (role:user)
-Route::prefix('user')->middleware(['role:user'])->group(function () {
-    // Rute lainnya untuk pengguna biasa bisa ditambahkan di sini
-});
+Route::prefix('user')->middleware(['role:user'])->group(function () {});
