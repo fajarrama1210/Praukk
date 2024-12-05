@@ -46,6 +46,9 @@
     <script src="{{ asset('assets/js/config.js') }}"></script>
 </head>
 <body style="height: auto;">
+
+    
+
     <section class="bg-white">
         <div class="container">
         <nav class=" contaier navbar navbar-expand-lg bg-white" id="home">
