@@ -1,11 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Http\Requests\StoreLibraryOfficerRequest;
-use App\Http\Requests\UpdateLibraryOfficerRequest;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use App\Models\User; // Pastikan model User di-import
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class LibraryOfficerController extends Controller
 {
@@ -20,23 +19,36 @@ class LibraryOfficerController extends Controller
         return view('admin.libraryOfficer.add');
     }
 
-    public function store(StoreLibraryOfficerRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg',
+        ]);
 
-        // Handle photo upload
+        $photoPath = null;
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('photos');
+            $photoPath = $request->file('photo')->store('photos', 'public');
         }
 
-        // Hash password
-        $data['password'] = Hash::make($request->password);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'photo' => $photoPath,
+        ]);
 
-        // Create new user
-        $officer = User::create($data);
-        $officer->assignRole('library_officer');
+        // Assign role officer
+        $role = Role::where('name', 'officer')->first();
+        $user->assignRole($role);
 
-        return redirect()->route('admin.libraryOfficer.list');
+        return redirect()->route('admin.libraryOfficer.list')->with('success', 'Berhasil Menambahkan Petugas.');
+    }
+    public function show(User $user)
+    {
+        return view('admin.libraryOfficer.detail', compact('user'));
     }
 
     public function edit(User $user)
@@ -44,39 +56,21 @@ class LibraryOfficerController extends Controller
         return view('admin.libraryOfficer.update', compact('user'));
     }
 
-    public function update(UpdateLibraryOfficerRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $data = $request->validated();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        ]);
 
-        // Handle photo upload if exists
-        if ($request->hasFile('photo')) {
-            // Delete old photo if exists
-            if ($user->photo) {
-                Storage::delete($user->photo);
-            }
-            $data['photo'] = $request->file('photo')->store('photos');
-        }
+        $user->update($request->only('name', 'email'));
 
-        // Update password if provided
-        if ($request->password) {
-            $data['password'] = Hash::make($request->password);
-        }
-
-        // Update user data
-        $user->update($data);
-
-        return redirect()->route('admin.libraryOfficer.list');
+        return redirect()->route('admin.libraryOfficer.list')->with('success', 'Berhasil Update Petugas.');
     }
 
     public function destroy(User $user)
     {
-        // Delete the photo if exists
-        if ($user->photo) {
-            Storage::delete($user->photo);
-        }
-
         $user->delete();
-
-        return redirect()->route('admin.libraryOfficer.list');
+        return redirect()->route('admin.libraryOfficer.list')->with('success', 'Berhasl Menghaspus Petugas.');
     }
 }

@@ -60,14 +60,11 @@
 
                 @include('admin.layouts.navbar')
 
-                <!-- Content wrapper -->
                 <div class="content-wrapper">
                     <!-- Content -->
                     @yield('content')
                 </div>
-                <!-- Content wrapper -->
             </div>
-            <!-- / Layout page -->
         </div>
         @if (session('success'))
             <script>

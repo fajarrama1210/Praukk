@@ -14,13 +14,10 @@
                         <button class="btn btn-info">Kembali</button>
                     </a>
                 </div>
-
                 <div class="card-body">
-                    <!-- Update form with PUT method -->
                     <form action="{{ route('admin.category.update', $bookCategory->id) }}" method="POST">
                         @csrf
-                        @method('PUT')  <!-- This will send a PUT request -->
-
+                        @method('PUT')
                         <div class="mb-3">
                             <label class="form-label" for="basic-default-fullname">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"

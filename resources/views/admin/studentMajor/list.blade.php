@@ -18,9 +18,9 @@
                 </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-                @foreach ($majors as $index => $major)
+                @foreach ($majors as  $major)
                 <tr>
-                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $major->name }}</td>
                     <td>
                         <div class="dropdown">

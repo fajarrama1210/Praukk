@@ -315,7 +315,7 @@
                                                             </td>
                                                         </tr>
                                                     @endguest
-                                                
+
                                                     @auth
                                                         <!-- Jika pengguna sudah login -->
                                                         @forelse ($collections as $collection)
