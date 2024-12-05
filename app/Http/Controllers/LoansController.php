@@ -140,4 +140,5 @@ class LoansController extends Controller
     {
         return Excel::download(new LoansExport, 'loans.xlsx');
     }
+    
 }

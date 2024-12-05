@@ -13,7 +13,7 @@ class BookReviews extends Model
     protected $guarded = ['id'];
     protected $with = ['user', 'book'];
 
-    protected $fillable = ['review', 'rating'];
+    protected $fillable = ['review', 'like', 'dislike'];
 
     public $timestamps = false;
 
