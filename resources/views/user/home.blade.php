@@ -156,7 +156,7 @@
 
                                     </div>
                                     {{-- <div class="col-md-3"></div>     --}}
-                                    <div class="col-md-9 ">
+                                    {{-- <div class="col-md-9 ">
                                         <div class="d-flex justify-content-center">
                                             <div class="col-md-6 pt-3">
                                                 <a href="{{ route('user.review') }}" class="text-decoration-none">
@@ -186,7 +186,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

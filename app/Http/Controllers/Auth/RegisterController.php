@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
@@ -9,25 +10,30 @@ use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Spatie\Permission\Models\Role;
 
-class RegisterController extends Controller {
+class RegisterController extends Controller
+{
     use RegistersUsers;
 
     protected $redirectTo = '/login'; // Ubah ke '/login'
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('guest');
     }
 
 
-    public function showRegistrationForm() {
+    public function showRegistrationForm()
+    {
         $classes = StudentClass::all();
         $majors = StudentMajor::all();
         return view('auth.register', compact('classes', 'majors'));
     }
 
 
-    protected function validator(array $data) {
+    protected function validator(array $data)
+    {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'nisn' => ['required', 'string', 'max:15', 'unique:users'],
@@ -38,13 +44,16 @@ class RegisterController extends Controller {
         ]);
     }
 
-    protected function create(array $data) {
+    protected function create(array $data)
+    {
         $photoPath = null;
+        $userRole = Role::firstOrCreate(['name' => 'user']);
 
         if (isset($data['photo'])) {
             $photoPath = $data['photo']->store('photos', 'public');
         }
-        return User::create([
+
+        $user = User::create([
             'name' => $data['name'],
             'nisn' => $data['nisn'],
             'email' => $data['email'],
@@ -52,7 +61,11 @@ class RegisterController extends Controller {
             'major_id' => $data['major_id'],
             'password' => Hash::make($data['password']),
             'photo' => $photoPath,
-            'role' => 'user', 
         ]);
+
+        $user->assignRole($userRole);
+
+        // Pastikan fungsi mengembalikan user
+        return $user;
     }
 }
